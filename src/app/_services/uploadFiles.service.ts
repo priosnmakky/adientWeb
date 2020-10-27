@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
-// import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
-// import { environment } from '@environments/environment';
-// import { User } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
 export class UploadFilesService {
@@ -18,13 +16,14 @@ export class UploadFilesService {
     }
 
 
-    uploadFile(file:any,customer_id:any,project_id:any) {
+    uploadFile(file:any,customer_code:any,project_code:any) {
 
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('customer_id', customer_id);
-        formData.append('project_id', project_id);
-        return this.http.post('http://127.0.0.1:8080/api/upload',
+        formData.append('customer_code', customer_code);
+        formData.append('project_code', project_code);
+
+        return this.http.post(`${environment.apiUrl}/api/upload`,
                             formData
                             ).pipe(map(response => {
                                 

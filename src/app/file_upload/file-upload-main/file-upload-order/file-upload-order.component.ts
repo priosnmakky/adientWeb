@@ -81,14 +81,13 @@ export class FileUploadOrderComponent implements OnInit {
                   {
                     this.ngOnInit()
                     this.alertService.success(response.massage, this.options)
-                    // console.log(this.fileList.length);
                   }
                   else
                   {
                     console.log(response)
-                    this.validateErrorList = response.validateErrorList
+                    this.validateErrorList = response.validate_error_list
                     this.alertService.error(response.massage, this.options)
-                    // console.log(this.validateErrorList);
+
                   }
                   
                 }
