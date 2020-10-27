@@ -1,0 +1,254 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Station Code</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+
+                <div class="col-sm-2">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list_database" [ngValue]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Project Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="project_selected"
+                        [disabled]="customer_selected==null||customer_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of get_related_project_list(customer_selected)" [ngValue]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Station Code :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <input type="text" id="stationCode" name="lname" class="form-control" [(ngModel)]="stationCode_selected" >
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                 <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove"   (click)="add_customer()">
+                        Add
+                    </button>
+                 
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom"  [hidden] ="is_add||is_edit||is_remove" (click)="click_remove()" >
+                        Remove
+                    </button>
+                    <!--
+                    <button type="button" class="btn btn btn-danger button-custom" *ngIf="is_remove" (click)="delete_customer()" >
+                        Delete
+                    </button>
+                    -->
+                </div>
+             
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" *ngIf="is_remove" >
+                  
+                        </div>
+                        <!--
+                        <div class="table-cell" >
+                            Customer
+                        </div>
+                        -->
+                        <div class="table-cell">
+                            Project Code
+                        </div>
+                        <div class="table-cell">
+                            Station Code
+                        </div>
+                        <div class="table-cell">
+                            Description
+                        </div>
+                        <div class="table-cell">
+                            Type
+                        </div>
+                        <div class="table-cell">
+                            Zone
+                        </div>
+                        <div class="table-cell">
+                            Province
+                        </div>
+                        <div class="table-cell">
+                            Address
+                        </div>
+                        <div class="table-cell">
+                            Remark
+                        </div>
+                        <div class="table-cell">
+                            Update By
+                        </div>
+                        <div class="table-cell">
+                            Updated Timestamp
+                        </div>
+                        <div class="table-cell">
+                            
+                        </div>
+
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let customer of customer_list"   (dblclick)= "open_edited(customer)"  >
+                        <div class="table-cell" *ngIf="is_remove">
+                            <input type="checkbox" [value]="customer.is_remove"  class="form-control"  style="width:40px;vertical-align: middle;" (change)="add_remove_customer(customer)" />
+                        </div>
+                        <!-- <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.customer_code}}
+                        </div>
+                        --> 
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.project_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.station_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.description}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.station_type}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.zone}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.province}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.address}}
+                        </div>
+                        <div class="table-cell" *ngIf="!customer.is_add&&!customer.is_edit" style="vertical-align: middle">
+                            {{customer.remark}}
+                        </div>
+
+                        <!--
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle"
+                                [ngStyle]="(customer.customer_code==null||customer.customer_code =='') && {'border-color': 'red'}" 
+                                [(ngModel)]="customer.customer_code">
+
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let customer of customer_list_database" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                            </select>
+     
+                        </div>
+                        -->
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                             <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                             [ngStyle]="(customer.project_code==null||customer.project_code =='') && {'border-color': 'red'}" 
+                             [(ngModel)]="customer.project_code">
+                                
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.station_code==null||customer.station_code =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.station_code" >
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_edit" style="vertical-align: middle">
+                            {{customer.station_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.description==null||customer.description =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.description" >
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <select name="selectedCustomer" id="aantalggg" class="form-control"  style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.station_type==null||customer.station_type =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.station_type">
+                                <option [value]="''">Please select</option>
+                                <option [value]="'SUPPLIER'">SUPPLIER</option>
+                                <option [value]="'PLANT'">PLANT</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.zone==null||customer.zone =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.zone" >
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.province==null||customer.province =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.province" >
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                            [ngStyle]="(customer.address==null||customer.address =='') && {'border-color': 'red'}"
+                            [(ngModel)]="customer.address" >
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_add||customer.is_edit">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                            [(ngModel)]="customer.remark" >
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle">
+                            {{customer.updated_by}}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle"> 
+                            {{customer.updated_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                        <!--
+                        <div class="table-cell" *ngIf="customer.is_add">
+                            <button type="button" class="btn btn-success"(click)="save_customer()" style="vertical-align: middle" 
+                            [disabled]="customer.customer_code==null||customer.customer_code==''||customer.project_code==null||
+                            customer.project_code==''||customer.station_code==null||customer.station_code==''?'True':null||
+                            customer.station_type==null||customer.station_type==''?'True':null">
+                                Save
+                            </button>
+                        </div>
+                         <div class="table-cell" *ngIf="customer.is_add">
+                            <button type="button" class="btn btn-danger" (click)="clear_add_customer(customer)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_edit">
+                            <button type="button" class="btn btn-warning" (click)="edited_customer(customer)"  style="vertical-align: middle">Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="customer.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited(customer)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+                       
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  

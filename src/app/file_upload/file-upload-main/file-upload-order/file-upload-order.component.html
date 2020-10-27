@@ -1,0 +1,162 @@
+
+    <div class="content">
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Upload Order</h1>               
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    Customer Code :
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customerSelected">
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    Project :
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="projectSelected">
+                        <option *ngFor="let project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-30">
+                <div class="col-sm-6">
+                <form [formGroup]="myForm" (ngSubmit)="submit()">
+                <label class="btn  button-custom" *ngIf="projectSelected && customerSelected &&fileList.length==0" [ngClass]="{'btn-info':projectSelected && customerSelected,'btn-light':!projectSelected ||!customerSelected}">
+                    Select File
+                    <input 
+                        id="file" 
+                        type="file" 
+                        [disabled]="!projectSelected ||!customerSelected ? true : null"
+                        onclick="this.value = null"
+                        (change)="onFileChange($event)" hidden>
+                </label>
+                </form>
+                    
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-info button-custom" (click)="confirm()" *ngIf="fileList.length!=0">
+                        Confirm <br> 
+                    </button>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-info button-custom" (click)="not_confirm()" *ngIf="fileList.length!=0 ">
+                        Clear <br>
+
+                    </button>
+                </div>
+            </div>
+            <div class="row margin-10 table-order" *ngIf="validateErrorList.length==0">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell">csv</div>
+                        <div class="table-cell">File No.</div>
+                        <div class="table-cell">Order Count</div>
+                        <div class="table-cell">Status</div>
+                        <div class="table-cell">Uploaded By</div>
+                        <div class="table-cell">Uploaded TimeStamp</div>
+                    </div>
+                    <div  class="table-row" *ngFor="let file of fileList"  >
+                        <div class="table-cell" (click)="downloadCSV(file.file_no)" >
+                            <img src="/assets/img/csv-icon.png" alt="image" class="csv-icon">
+                        </div>
+                        <div class="table-cell" >
+                            {{file.file_no}}
+                        </div>
+                        <div class="table-cell" >
+                            {{file.order_count}}
+                        </div>
+                        <div class="table-cell" *ngIf="file.status==1" >
+                            DRAFT
+                        </div>
+                        <div class="table-cell" *ngIf="file.status==2" >
+                            COMPLETE
+                        </div>
+                        <div class="table-cell" *ngIf="file.status==2" >
+                            COMPLETE
+                        </div>
+                        <div class="table-cell" >
+                            {{file.created_by}}
+                        </div>
+                        <div class="table-cell"  >
+                            {{file.created_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                    </div>
+
+                </div>
+            <div>
+        </div>
+           <!-- <div class="row margin-10 table-order center" >
+                <div class="col-sm-12">
+                    Error
+                </div>
+            <div>
+            <div class="row margin-10 table-order" *ngFor="let validateError of validateErrorList" >
+                <div class="col-sm-4">
+                    {{validateError.error}}
+                </div>
+                <div class="col-sm-4">
+                    {{validateError.row}}
+                </div>
+                <div class="col-sm-4">
+                    {{validateError.column}}
+                </div>
+            <div>
+            </div>
+            -->
+        </div>
+        
+
+         <div class="row margin-30" style="overflow-x:auto;" *ngIf="validateErrorList.length>0" >
+                <div class="table">
+                    <div class="table-row header red">
+                        
+                        <div class="table-cell" >
+                            Error Massage
+                        </div>
+                        <div class="table-cell">
+                            (Row ; Column)
+                        </div>
+                        
+                    </div>
+                    
+                     <div class="table-row"  *ngFor="let validateError of validateErrorList"  >
+                        <div class="table-cell" >
+                           {{validateError.error}}
+                        </div>
+                        <div class="table-cell" >
+                           ({{validateError.row}} ; {{validateError.column}})
+                        </div>
+                        
+                    </div>
+  
+            </div>
+        <!--<div class="container margin-30 bg-danger" *ngIf="validateErrorList && fileList.length == 0" >
+            <div class="row">
+                <div class="col-4"><h4>Error Description</h4></div>
+                <div class="col-4"><h4>Row</h4></div>
+                <div class="col-4"><h4>Column</h4></div>
+            </div>
+            <div class="row margin-10" *ngFor="let validateError of validateErrorList" >
+                <div class="col-4">
+                    {{validateError.error}}
+                </div>
+                <div class="col-4">
+                    {{validateError.row}}
+                </div>
+                 <div class="col-4">
+                    {{validateError.column}}
+                </div>
+            </div>
+        </div>
+        -->
+        
+    </div>
+  
+    

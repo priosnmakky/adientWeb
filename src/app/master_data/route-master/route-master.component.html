@@ -1,0 +1,354 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Route Master</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customer_code_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Project Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="project_code_selected"
+                        [disabled]="customer_code_selected==null||customer_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of get_related_project_list(customer_code_selected)" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Supplier Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="supplier_code_selected"
+                        [disabled]="project_code_selected==null||project_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let supplier of get_related_supplier_list(project_code_selected)" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Plant :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="plant_code_selected"
+                        [disabled]="project_code_selected==null||project_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let plant of get_related_plant_list(project_code_selected)" [value]="plant.station_code" >{{plant.station_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Route Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="route_code_selected"
+                        [disabled]="project_code_selected==null||project_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let route of get_related_route_list(project_code_selected)" [value]="route.route_code" >{{route.route_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Trip No :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="trip_no_selected"
+                        [disabled]="route_code_selected==null||route_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let trip of get_related_trip_list(route_code_selected)" [value]="trip.trip_no" >{{trip.trip_no}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()">
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom"  (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove||validation_list.length >0" (click)="add_routeMaster()" >
+                        Add
+                    </button>
+                </div>
+                 <div class="col-sm-2" [hidden] ="is_add||is_edit||is_remove" >
+                    <form [formGroup]="myForm" >
+                        <label class="btn btn-info" >
+                            Update by CSV
+                            <input 
+                                id="file" 
+                                type="file" 
+                                onclick="this.value = null"
+                                (change)="onFileChange($event)" hidden>
+                        </label>
+                    </form>
+                </div>
+                <div class="col-sm-1" [hidden] ="is_add||is_edit||is_remove||validation_list.length >0" >
+                    <button type="button" class="btn btn-info button-custom"  (click)="click_remove()">
+                        Remove
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                </div>
+              
+              
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;" *ngIf="validation_list.length == 0">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                  
+                        </div>
+                        <div class="table-cell">
+                            Project Code
+                        </div>
+                        <div class="table-cell">
+                            Route Code
+                        </div>
+                        <div class="table-cell">
+                            Trip No
+                        </div>
+                        <div class="table-cell">
+                            Supplier Code
+                        </div>
+                        <div class="table-cell">
+                            Plant Code
+                        </div>
+                        <div class="table-cell">
+                            Pickup Before
+                        </div>
+                        <div class="table-cell">
+                            Release Time
+                        </div>
+                        <div class="table-cell">
+                            Pickup Time
+                        </div>
+                        <div class="table-cell">
+                            Depart Time
+                        </div>
+                        <div class="table-cell">
+                            Delivery Time
+                        </div>
+                        <div class="table-cell">
+                            Complete Time
+                        </div>
+                        <div class="table-cell">
+                            Update by 
+                        </div>
+                        <div class="table-cell">
+                            Update Time 
+                        </div>
+                       
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let route_master of route_master_List" >
+                        <div class="table-cell" >
+                           <input type="checkbox" *ngIf="is_remove"  class="form-control"  [value]="route_master.is_remove"
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_remove_routeMaster(route_master)" />
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.project_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle"  [hidden]="is_add">
+                            {{route_master.route_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.trip_no}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.supplier_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.plant_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.pickup_before}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.release_time }}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.pickup_time }}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.depart_time }}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.delivery_time }}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" [hidden]="is_add">
+                            {{route_master.complete_time }}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="route_master.is_add">
+                            <select name="selectedCustomer" id="aantalggg" class="form-control" style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.project_code==null||route_master.project_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.project_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let project of project_list"  [value]="project.project_code" >{{project.project_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="route_master.is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                            [ngStyle]="(route_master.route_code==null||route_master.route_code=='') && {'border-color': 'red'}" 
+                            [(ngModel)]="route_master.route_code" >
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                            [ngStyle]="route_master.trip_no==null||route_master.trip_no=='' && {'border-color': 'red'}" 
+                            [(ngModel)]="route_master.trip_no" >
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <select name="selectedCustomer" id="aantalggg" class="form-control" style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.supplier_code==null||route_master.supplier_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.supplier_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let supplier of supplier_list"  [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <select name="selectedCustomer" id="aantalggg" class="form-control" style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.plant_code==null||route_master.plant_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.plant_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let plant of plant_list"  [value]="plant.station_code" >{{plant.station_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.pickup_before==null||route_master.pickup_before=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.pickup_before" integerOnly>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.release_time==null||route_master.release_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.release_time" timeFormat >
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.pickup_time==null||route_master.pickup_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.pickup_time" timeFormat>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.depart_time==null||route_master.depart_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.depart_time" timeFormat >
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.delivery_time==null||route_master.delivery_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.delivery_time" timeFormat >
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_add">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                                [ngStyle]="(route_master.complete_time==null||route_master.complete_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="route_master.complete_time"  timeFormat>
+                        </div>
+
+
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{route_master.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{route_master.updated_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                    </div>
+  
+                </div>
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;" *ngIf="validation_list.length >0">
+                <div class="table">
+                    <div class="table-row header red">
+                        
+                        <div class="table-cell" >
+                            Error Massage
+                        </div>
+                        <div class="table-cell">
+                            (row,column)
+                        </div>
+                        
+                    </div>
+                    
+                     <div class="table-row"  *ngFor="let validation of validation_list"  >
+                        <div class="table-cell" >
+                           {{validation.error}}
+                        </div>
+                        <div class="table-cell" >
+                           ({{validation.row}},{{validation.column}})
+                        </div>
+                        
+                    </div>
+  
+            </div>
+
+            
+        </div>
+    </div>
+
+    <div [style.display]="is_show_modal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row margin-30" style="overflow-x:auto;">
+                        <div class="table">
+                            <div class="table-row header yellow">
+                        
+                                <div class="table-cell" >
+                                    Error Massage
+                                </div>
+                                <div class="table-cell">
+                                    (row,column)
+                                </div>
+                        </div>
+                        <div class="table-row"  *ngFor="let validate_warning of validate_warning_list"  >
+                            <div class="table-cell" >
+                                {{validate_warning.error}}
+                            </div>
+                            <div class="table-cell" >
+                                ({{validate_warning.row}})
+                            </div>
+                        
+                        </div>
+  
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide_warning_modal()">Close</button>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+    
+
+
+  

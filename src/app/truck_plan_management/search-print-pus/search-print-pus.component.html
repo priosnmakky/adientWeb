@@ -1,0 +1,256 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Search & Print PUS</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                
+                <div class="col-sm-2 margin-10">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list"  [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Project Code:</h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="project_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of project_list"  [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Due Date From:</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <mat-form-field style="width:'100%'">
+                    <input matInput [matDatepicker]="dueDateFrom"  placeholder="Select Date" [(ngModel)]="due_date_from_selected" > 
+                    <mat-datepicker-toggle matSuffix [for]="dueDateFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDateFrom></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Due Date To:</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <mat-form-field style="width:'100%'">
+                    <input matInput [matDatepicker]="dueDateTo"  placeholder="Select Date" [(ngModel)]="due_date_to_selected" > 
+                    <mat-datepicker-toggle matSuffix [for]="dueDateTo"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDateTo></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Supplier Code:</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedQuantity" id="aantal" class="form-control" style="width:'100%%';vertical-align" [(ngModel)]="supplier_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let supplier of supplier_list" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>PUS Ref:</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <input type="text" id="lname" name="lname" class="form-control "  style="width:'100%%';vertical-align"  
+                        [(ngModel)]="PUS_ref_selected" 
+                    >
+                </div>
+            </div>
+            <div class="row margin-30">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()"  >
+                        Search
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download CSV
+                    </button>
+                </div>  
+            </div>
+
+            <div class="row margin-30">
+                <div class="table">
+                    <div class="table-row header blue">
+
+                        <div class="table-cell" >
+                            PDF
+                        </div>
+                        <div class="table-cell">
+                            Cancel
+                        </div>
+                        <div class="table-cell">
+                            Edit
+                        </div>
+                        <div class="table-cell">
+                            PUS Ref.
+                        </div>
+                        <div class="table-cell">
+                            Status
+                        </div>
+                        <div class="table-cell">
+                            Supplier
+                        </div>
+                        <div class="table-cell">
+                            Plant
+                        </div>
+                        <div class="table-cell">
+                            Order Count
+                        </div>
+                        <div class="table-cell">
+                            Due Date
+                        </div>
+                        <div class="table-cell">
+                            Release Date
+                        </div>
+                        <div class="table-cell">
+                            Delivery Date
+                        </div>
+                        <div class="table-cell">
+                            Route Code
+                        </div>
+                        <div class="table-cell">
+                            Trip 
+                        </div>
+                        <div class="table-cell">
+                            Truck License
+                        </div>
+                        <div class="table-cell">
+                            Driver Name
+                        </div>
+                    </div>
+                    
+                    <div class="table-row" *ngFor="let pickUp of pickUp_list"  >
+                        <div class="table-cell" style="vertical-align: middle" >
+                            <img src="/assets/img/pdf_icon.png" alt="image" style="width:20px,height:20px,color:blue;text-align:center;" class="csv-icon" (click)="downloadPDF(pickUp.pickup_no)">
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            <img src="/assets/img/delete_icon_pickup.png" alt="image"  *ngIf="pickUp.status==2" style="width:10px,height:10px,color:blue;text-align:center;" class="csv-icon" (click)="delete_pickUp(pickUp.pickup_no)">
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" (click)="get_order_by_pickup_no(pickUp.pickup_no)"  >
+                           <img src="/assets/img/edit-icon.png" alt="image" style="width:20px,height:20px,color:blue;text-align:center;" class="csv-icon" (click)="get_order_by_pickup_no(pickUp.pickup_no)">
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.pickup_no }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" *ngIf="pickUp.status==2" >
+                           Complete
+                        </div>
+                         <div class="table-cell" style="vertical-align: middle" *ngIf="pickUp.status==1" >
+                           Waiting
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.supplier_code }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.plant_code }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.order_count }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.due_date }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.release_time }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.delivery_time }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.route_code }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.route_trip }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.truck_license }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ pickUp.name }}
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div [style.display]="showModal ? 'block' : 'none'" class="modal cdk-overlay-pane center"   id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center" style="background-color: #668cff;text-align: center;">
+                    <h2 class="modal-title w-100">Order Management</h2>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="table">
+                        <div class="table-row header blue">
+
+                            <div class="table-cell">
+                                Supplier
+                            </div>
+                            <div class="table-cell">
+                                Plant
+                            </div>
+                            <div class="table-cell">
+                                Due Date
+                            </div>
+                            <div class="table-cell">
+                                Route Code
+                            </div>
+                            <div class="table-cell">
+                                Trip
+                            </div>
+                            <div class="table-cell">
+                            </div>
+                        </div>
+                    
+                        <div class="table-row" *ngFor="let order of order_list" >
+
+                            <div class="table-cell" style="vertical-align: middle" >
+                                {{ order.supplier_no }}
+                            </div>
+                            <div class="table-cell" style="vertical-align: middle" >
+                                {{ order.plant_no }}
+                            </div>
+                            <div class="table-cell" style="vertical-align: middle" >
+                                {{ order.due_date }}
+                            </div>
+                            <div class="table-cell" style="vertical-align: middle" >
+                                {{ order.route_code }}
+                            </div>
+                            <div class="table-cell" style="vertical-align: middle" >
+                                {{ order.route_trip }}
+                            </div>
+                            <div class="table-cell" style="vertical-align: middle" >
+                                <button type="button" class="btn btn-info btn-danger" *ngIf="order.pickup_no"  (click)="deleted_order_in_pickup(order.order_id)"  >
+                                    Delete
+                                </button>
+                                <button type="button" class="btn btn-info btn-success" *ngIf="order.pickup_no==''" (click)="add_order_in_pickup(order.order_id)"  >
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+   
+
+
+  

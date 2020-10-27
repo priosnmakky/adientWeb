@@ -1,0 +1,252 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Route Info</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                     <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customer_code_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Project Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="project_code_selected"
+                        [disabled]="customer_code_selected==null||customer_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of get_related_project_list(customer_code_selected)" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Route Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="route_code_selected"
+                        [disabled]="project_code_selected==null||project_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let route of get_related_route_list(project_code_selected)" [value]="route.route_code" >{{route.route_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Trip No :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="trip_no_selected" 
+                        [disabled]="route_code_selected==null||route_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let trip of get_related_trip_list(route_code_selected)" [value]="trip.trip_no" >{{trip.trip_no}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                 <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove" (click)="add_routeInfo()">
+                        Add
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom"  [hidden] ="is_add||is_edit||is_remove" (click)="click_remove()" >
+                        Remove
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                </div>
+              
+              
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                  
+                        </div>
+                        <div class="table-cell" >
+                            Project Code
+                        </div>
+                         <!--
+                        <div class="table-cell">
+                            Route No
+                        </div>
+                        -->
+                        <div class="table-cell">
+                            Route Code
+                        </div>
+                        <div class="table-cell">
+                            Trip No
+                        </div>
+                        <div class="table-cell">
+                            Province
+                        </div>
+                        <div class="table-cell">
+                            Truck License
+                        </div>
+                        <div class="table-cell">
+                            Driver
+                        </div>
+                        <div class="table-cell">
+                            Update by
+                        </div>
+                        <div class="table-cell">
+                            Update Time
+                        </div>
+                       
+                    </div>
+                    
+                     <div class="table-row"   *ngFor="let routeInfo of routeInfo_list" (dblclick)= "open_edited(routeInfo)"  >
+                        <div class="table-cell" >
+                            <input type="checkbox" *ngIf="is_remove"  class="form-control"  
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_remove_routeMaster(routeInfo)" />
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit" >
+                            {{routeInfo.project_code}}
+                        </div>
+                        <!--
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit" >
+                            {{routeInfo.route_no}}
+                        </div>
+                        -->
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit" >
+                            {{routeInfo.route_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
+                            {{routeInfo.trip_no}}
+                        </div> 
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
+                            {{routeInfo.truck_license}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
+                            {{routeInfo.province}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
+                            {{routeInfo.driver_name}}
+                        </div>
+                        
+
+                        <div class="table-cell" *ngIf="routeInfo.is_add" style="vertical-align: middle" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(routeInfo.project_code==null||routeInfo.project_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.project_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="routeInfo.is_edit">
+                            {{routeInfo.project_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add" style="vertical-align: middle" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(routeInfo.route_code==null||routeInfo.route_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.route_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  route of route_list" [value]="route.route_code" >{{route.route_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add" style="vertical-align: middle" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(routeInfo.trip_no==null||routeInfo.trip_no=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.trip_no"
+                                [disabled]="routeInfo.route_code==null||routeInfo.route_code==''">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  trip of get_trip_list_for_adding(routeInfo)" [value]="trip.trip_no" >{{trip.trip_no}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="routeInfo.is_edit">
+                            {{routeInfo.route_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="routeInfo.is_edit">
+                            {{routeInfo.trip_no}}
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add||routeInfo.is_edit" style="vertical-align: middle" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(routeInfo.province==null||routeInfo.province=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.province">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  province of truck_province_list" [value]="province" >{{province}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add||routeInfo.is_edit" style="vertical-align: middle" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(routeInfo.truck_license==null||routeInfo.truck_license=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.truck_license"
+                                [disabled]="routeInfo.province==null||routeInfo.province==''">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  truck of get_truck_license(routeInfo)" [value]="truck.truck_license" >{{truck.truck_license}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add||routeInfo.is_edit" style="vertical-align: middle" >
+                           <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle"
+                                [ngStyle]="(routeInfo.driver_code==null||routeInfo.driver_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.driver_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  driver of driver_list" [value]="driver.driver_code" >{{driver.name}}</option>
+                            </select>
+                        </div>
+
+                       
+                        
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{routeInfo.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle"  >
+                            {{routeInfo.updated_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                        <!--
+                         <div class="table-cell" *ngIf="routeInfo.is_add">
+                            <button type="button" class="btn btn-success" (click)="save_routeInfo(routeInfo)"  
+                            [disabled]= "routeInfo.project_code==null||routeInfo.project_code==''||routeInfo.route_code==null||routeInfo.route_code==''||routeInfo.trip_no==null||routeInfo.trip_no==''" 
+                            style="vertical-align: middle">save</button>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_add">
+                            <button type="button" class="btn btn-danger" (click)="clear_add_driver(routeInfo)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_edit">
+                            <button type="button" class="btn btn-warning" (click)="edited_routerInfo(routeInfo)"  
+                            [disabled]= "routeInfo.project_code==null||routeInfo.project_code==''||routeInfo.route_code==null||routeInfo.route_code==''||routeInfo.trip_no==null||routeInfo.trip_no==''" 
+                            style="vertical-align: middle">Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="routeInfo.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited()" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  

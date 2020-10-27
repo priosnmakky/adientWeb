@@ -1,0 +1,259 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Generate PUS</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                
+                <div class="col-sm-2 margin-10">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list"  [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Project Code:</h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="project_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of project_list"  [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Due Date :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <mat-form-field style="width:'100%'">
+                    <input matInput [matDatepicker]="dueDate"  placeholder="Select Date" [(ngModel)]="due_date_selected" > 
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDate></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+            </div>
+            <div class="row margin-30">
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="is_generate_PUS = !is_generate_PUS" >
+                        Generate PUS
+                    </button>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-info button-custom" (click)="show()"  >
+                        Generate Manual PUS
+                    </button>
+                </div>  
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+
+                        <div class="table-cell" >
+                            PUS Ref.
+                        </div>
+                        <div class="table-cell">
+                            Supplier
+                        </div>
+                        <div class="table-cell">
+                            Plant
+                        </div>
+                        <div class="table-cell">
+                            Order Count
+                        </div>
+                        <div class="table-cell">
+                            Due Date
+                        </div>
+                        <div class="table-cell">
+                            Route Code
+                        </div>
+                        <div class="table-cell">
+                            Trip
+                        </div>
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let order of order_list" >
+
+                        <div class="table-cell" style="vertical-align: middle" >
+                            <input type="checkbox" 
+                                *ngIf="is_generate_PUS&&order.pickup_no==''||order.pickup_no==null" 
+                                [value]="order.is_generated_PUS" 
+                                class="form-control"  
+                                style="width:40px;vertical-align: middle;"
+                                (change)="add_generated_PUS(order)" 
+                            />
+                            {{ order.pickup_no }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.supplier_no }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.plant_no }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.order_count }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.due_date }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.route_code }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{ order.route_trip }}
+                        </div>
+                      
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div [style.display]="showModal ? 'block' : 'none'" class="modal cdk-overlay-pane"   id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center" style="background-color: #668cff;text-align: center;">
+                    <h2 class="modal-title w-100">Generate Manual PUS</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-2" style="text-align: left">
+                                <h4>Project Code:</h4>
+                            </div>
+                            <div class="col-sm-4"  style="text-align: left" >
+                                <select name="selectedCustomer" id="aantalggg" class="form-control" style="width:'100%%';vertical-align" 
+                                    [ngStyle]="(routeMaster.project_code==null||routeMaster.project_code=='') && {'border-color': 'red'}" 
+                                    [(ngModel)]="routeMaster.project_code">
+                                    <option [ngValue]="null">Please select</option>
+                                    <option *ngFor="let project of project_list"  [value]="project.project_code" >{{project.project_code}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2" style="text-align: left">
+                                <h4>Due Date:</h4>
+                            </div>
+                            <div class="col-sm-4"  style="text-align: left" >
+                                <mat-form-field  style="width:'100%'">
+                                <input matInput [matDatepicker]="addDueDate"  placeholder="Select Date" [(ngModel)]="add_due_date" > 
+                                <mat-datepicker-toggle matSuffix [for]="addDueDate"></mat-datepicker-toggle>
+                                <mat-datepicker #addDueDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-2"  style="text-align: left" >
+                                <h4>Route Code:</h4>
+                            </div>
+                            <div class="col-sm-4"  style="text-align: left" >
+                                <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align" 
+                                [ngStyle]="(routeMaster.route_code==null||routeMaster.route_code=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeMaster.route_code" >
+                            </div>
+                            <div class="col-sm-2 margin-10"  style="text-align: left" >
+                                <h4>Trip No:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10"  style="text-align: left" >
+                                <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align"
+                                [ngStyle]="(routeMaster.trip_no==null||routeMaster.trip_no=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeMaster.trip_no" >
+                            </div>
+                            <div class="col-sm-2 margin-10"  style="text-align: left"  >
+                                <h4>Supplier Code:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10"  style="text-align: left" >
+                                <select name="selectedQuantity" id="aantal" class="form-control" style="width:'100%%';vertical-align" [(ngModel)]="routeMaster.supplier_code" 
+                                [ngStyle]="(routeMaster.supplier_code==null||routeMaster.supplier_code=='') && {'border-color': 'red'}" >
+                                    <option [ngValue]="null">Please select</option>
+                                    <option *ngFor="let supplier of supplier_list" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2 margin-10"  style="text-align: left" >
+                                <h4>Plant Code :</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10"  style="text-align: left" >
+                                <select name="selectedQuantity" id="aantal" class="form-control" style="width:'100%%';vertical-align" [(ngModel)]="routeMaster.plant_code"
+                                [ngStyle]="(routeMaster.plant_code==null||routeMaster.plant_code=='') && {'border-color': 'red'}"  >
+                                    <option [ngValue]="null">Please select</option>
+                                    <option *ngFor="let plant of plant_list" [value]="plant.station_code" >{{plant.station_code}}</option>
+                                </select>
+                            </div>      
+                            <div class="col-sm-6 margin-10"  style="text-align: left" >
+                            </div>
+                            <div class="col-sm-2 margin-30"  style="text-align: left" >
+                                <h4>Pickup Before:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-30"   style="text-align: left"  >
+                                <input type="text" id="lname" name="lname" class="form-control "  style="width:'100%%';vertical-align"  
+                                    [(ngModel)]="routeMaster.pickup_before" 
+                                    [ngStyle]="(routeMaster.pickup_before==null) && {'border-color': 'red'}"  
+                                     integerOnly>
+                            </div>
+
+                            <div class="col-sm-2 margin-30"  style="text-align: left"  >
+                                <h4>Release Time:</h4>
+                            </div>
+
+                            <div class="col-sm-4 margin-30"   style="text-align: left" >
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align"  
+                                [ngStyle]="(routeMaster.release_time==null||routeMaster.release_time=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeMaster.release_time" timeFormat >
+                            </div>
+                            <div class="col-sm-2 margin-30"  style="text-align: left"  >
+                                <h4>Pickup Time:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-30"   style="text-align: left"  >
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align" 
+                                [(ngModel)]="routeMaster.pickup_time" 
+                                [ngStyle]="(routeMaster.pickup_time==null||routeMaster.pickup_time=='') && {'border-color': 'red'}" 
+                                timeFormat>
+                            </div>
+                            <div class="col-sm-2 margin-10"  style="text-align: left"  >
+                                <h4>Depart Time:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10"   style="text-align: left"  >
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align"
+                                [(ngModel)]="routeMaster.depart_time" 
+                                [ngStyle]="(routeMaster.depart_time==null||routeMaster.depart_time=='') && {'border-color': 'red'}" 
+                                timeFormat>
+                            </div>
+                            <div class="col-sm-2 margin-10" style="text-align: left"  >
+                                <h4>Delivery Time:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10" style="text-align: left"   >
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align" 
+                                [(ngModel)]="routeMaster.delivery_time" 
+                                [ngStyle]="(routeMaster.delivery_time==null||routeMaster.delivery_time=='') && {'border-color': 'red'}"
+                                timeFormat>
+                            </div>
+                            <div class="col-sm-2 margin-10"  style="text-align: left"  >
+                                <h4>Complete Time:</h4>
+                            </div>
+                            <div class="col-sm-4 margin-10" style="text-align: left"  >
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align"
+                                [(ngModel)]="routeMaster.complete_time" 
+                                [ngStyle]="(routeMaster.complete_time==null||routeMaster.complete_time=='') && {'border-color': 'red'}"
+                                timeFormat>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<img src="{{image_url}}" id="imagepreview" style="width: 425px; height: 425px;" > -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click) = "hide()">Close</button>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+    
+
+
+  

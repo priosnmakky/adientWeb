@@ -1,0 +1,90 @@
+<div class="nav-side-menu">
+    <div class="brand">ADIENT Project</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+  
+        <div class="menu-list">
+  
+            <ul id="menu-content" class="menu-content collapse out">
+                <li >
+                
+                    <a>
+                        <i class="fas fa-tachometer-alt fa-lg"  ></i> Home
+                    </a>
+                </li>
+                <li  data-toggle="collapse" data-target="#order" class="collapsed active">
+                    <a>
+                        <i class="fas fa-map"></i> Order
+                        
+                    </a>
+                </li>
+                <ul class="sub-menu collapse" id="order">
+                    <li routerLink="/order-upload"  >   Upload Order</li>
+                    <li routerLink="/order-mis-match">   Mismatch Order</li>
+                    <li routerLink="/order-pending"> Pending Order </li>
+                    <li routerLink="/order-upload-log-file">   Upload Order Log </li>
+                    <li routerLink="/order-transaction" >  Order Trasaction </li>
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#truck" class="collapsed active">
+                    <a>
+                        <i class="fas fa-tasks"></i> Truck Plan Management
+                    </a>
+                </li>
+                <ul class="sub-menu collapse" id="truck">
+                    <li routerLink="/truck-plan-management/generate-PUS" >Generate Pickup Sheet </li>
+                    <li routerLink="/truck-plan-management/search-print-PUS" >Search & Print Pickup Sheet</li>
+                    <li routerLink="/truck-plan-management/generate-truck-plan" >Generate Track </li>
+                    <li routerLink="/truck-plan-management/search-print-truck_plan" n>Search & Print Track Plan</li>     
+                </ul>
+                <li  data-toggle="collapse" data-target="#tracking" class="collapsed active">
+                    <a>
+                        <i class="fas fa-truck"></i> Truck Tracking 
+                        
+                    </a>
+                </li>
+                <ul class="sub-menu collapse" id="tracking">
+                    <li >Truck Release </li>
+                    <li >Truck Status</li>
+                    <li >Order Statua inquiry</li>    
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#master_data" class="collapsed active">
+                    <a>
+                        <i class="fas fa-database"></i> Master Data
+                    </a>
+                </li>
+                <ul class="sub-menu collapse" id="master_data">
+                    <li routerLink="/master-data/project">       Project Code        </li>
+                    <li routerLink="/master-data/customer">       Station Code       </li>
+                    <li routerLink="/master-data/calendar" >       Calendar        </li>    
+                    <li routerLink="/master-data/package" >       Package Master      </li>  
+                    <li routerLink="/master-data/part">       Part Master     </li>    
+                    <li routerLink="/master-data/route-info" >       Route Info      </li>   
+                    <li routerLink="/master-data/route-master" >       Route Master        </li> 
+                    <li routerLink="/master-data/truck">       Truck       </li> 
+                    <li routerLink="/master-data/driver">       Driver      </li> 
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#report" class="collapsed active">
+                    <a>
+                        <i class="fas fa-print"></i> Report     
+                    </a>
+                </li>
+                <ul class="sub-menu collapse" id="report">
+                    <li > Billing Report </li>
+                    <li >Trip Allowance Report</li>
+                    <li >KPI Report</li>   
+                </ul>
+
+
+                <li (click)="logout()" class="collapsed active" >
+                  <a>
+                  <i class="fas fa-sign-out-alt"  ></i> Logout
+                  </a>
+                </li>
+            </ul>
+     </div>
+</div>
+
+
+      

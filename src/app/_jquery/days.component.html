@@ -1,0 +1,9 @@
+<form>
+  Start Date : <input type="text"  name="startDate" id="startDate"/>
+  End Date : <input type="text"  name="endDate" id="endDate" />
+  <p></p>
+  <button (click)="getNoDays()">No. Of Days</button>
+</form>
+<p></p>
+<h3 *ngIf="message">{{message}}</h3>
+<h3 *ngIf="days > 0">No. of days = {{days}} </h3>

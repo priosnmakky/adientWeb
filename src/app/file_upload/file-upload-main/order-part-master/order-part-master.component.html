@@ -1,0 +1,119 @@
+
+    
+ <div class="content" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Part Master</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4> Customer Code : </h4>
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customer_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.name" >{{customer.name}}</option>
+                    </select>
+                <!--
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                -->
+ 
+                   
+                </div>
+                <div class="col-sm-2">
+                    <h4> Project : </h4>
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="project_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                    
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Supplier Code : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="supplier_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let supplier of supplier_list" [value]="supplier.supplier_code" >{{supplier.supplier_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Plant Code : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="plant_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let plant of plant_list" [value]="plant.plant_code" >{{plant.plant_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Due Date From : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+
+                    <mat-form-field>
+                    <input matInput [matDatepicker]="start" [(ngModel)]="start_date_selected"  placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                    <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Due Date To :  </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+
+                    <mat-form-field>
+                    <input matInput [matDatepicker]="end" [(ngModel)]="end_date_selected"  placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                    <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+            </div>
+            <div class="row margin-30">
+            <!-- 
+                <div class="col-sm-6">
+                   
+               <!--  <form [formGroup]="myForm" >
+                <label class="btn  button-custom"  >
+                    Select File (กดเลือกไฟล์)
+                   
+                </label>
+                
+                </form>
+                
+                    
+                </div> -->
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="cofirm()">
+                        Search
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()">
+                        Download CSV
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="match_order()">
+                        Match Order
+                    </button>
+                </div>
+            </div>
+         
+        </div>
+        
+    </div>
+   
+
+
+  

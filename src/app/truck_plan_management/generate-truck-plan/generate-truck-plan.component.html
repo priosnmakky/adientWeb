@@ -1,0 +1,104 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Generate Truck Plan</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                
+                <div class="col-sm-2 margin-10">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list"  [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Project Code:</h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="project_code_selected" >
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of project_list"  [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Due Date :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                   <mat-form-field style="width:'100%'">
+                            <input matInput [matDatepicker]="dueDate"  placeholder="Select Date" [(ngModel)]="due_date_selected" > 
+                        <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                        <mat-datepicker #dueDate></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+            </div>
+            <div class="row margin-30">
+                 <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()"    >
+                        Search
+                    </button>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-info button-custom" (click)="is_generate_truck_plan=!is_generate_truck_plan" >
+                        Generate Truck Plan
+                    </button>
+                </div>
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+
+                        <div class="table-cell" >
+                            Truck Plan Ref.
+                        </div>
+                        <div class="table-cell">
+                            Number of PUS
+                        </div>
+                        <div class="table-cell">
+                            Due Date
+                        </div>
+                        <div class="table-cell">
+                            Route Code
+                        </div>
+                        <div class="table-cell">
+                            Trip
+                        </div>
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let pickup of pickup_list"  >
+
+                        <div class="table-cell" style="vertical-align: middle" >
+                            <input type="checkbox" 
+                                *ngIf="is_generate_truck_plan&&pickup.truckplan_no==''||pickup.truckplan_no==null" 
+                                [value]="pickup.is_generate_truck_plan" 
+                                class="form-control"  
+                                style="width:40px;vertical-align: middle;"
+                                (change)="add_generated_truck_plan(pickup)" 
+                            />
+                            {{ pickup.truckplan_no }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            {{ pickup.pickUp_count }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            {{ pickup.due_date }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            {{ pickup.route_code }}
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            {{ pickup.route_trip }}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+   

@@ -1,0 +1,9 @@
+
+<app-menu-bar ></app-menu-bar>
+<app-file-upload-order (onChangeState)="changeState($event)" *ngIf="state == 'upload-order'"></app-file-upload-order>
+<app-file-upload-mismatch-order *ngIf="state == 'upload-mismatch-order'"></app-file-upload-mismatch-order>
+
+
+
+
+

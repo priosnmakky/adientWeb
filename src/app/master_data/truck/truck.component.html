@@ -1,0 +1,231 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Truck Master</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                
+                <div class="col-sm-2 margin-10">
+                    <h4>Truck License :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <input type="text" id="lname" name="lname" class="form-control"  [(ngModel)]="truck_license" >
+                </div>
+                <div class="col-sm-2">
+                    <h4>Province :</h4>
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedCustomer" id="aantal" class="form-control"  
+                        [(ngModel)]="truck_province">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let province of province_list"  [value]="province.province" >{{province.province}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Truck Type :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control"  [(ngModel)]="truck_type">
+                        <option [ngValue]="null">Please select</option>
+                        <option [ngValue]="'4W'">4W</option>
+                        <option [ngValue]="'6W'">6W</option>
+                        <option [ngValue]="'10W'">10W</option>
+               
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4>Fuel Type :</h4>
+                </div>
+                 <div class="col-sm-4 margin-10">
+                    <select name="selectedCustomer" id="aantal" class="form-control"  
+                        [(ngModel)]="truck_fuel">
+                        <option [ngValue]="null">Please select</option>
+                        <option [ngValue]="'Diesel'">Diesel</option>
+                        <option [ngValue]="'NGV'">NGV</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                <div class="col-sm-1" *ngIf="!is_add">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove" (click)="add_truck()">
+                        Add
+                    </button>
+                </div>
+                 <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove" (click)="click_remove()" >
+                        Remove
+                    </button>
+                </div>             
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                  
+                        </div>
+                        <div class="table-cell" >
+                            Truck License
+                        </div>
+                        <div class="table-cell">
+                            Province
+                        </div>
+                        <div class="table-cell">
+                            Truck Type
+                        </div>
+                        <div class="table-cell">
+                            Fuel Type
+                        </div>
+                        <div class="table-cell">
+                            Max Speed
+                        </div>
+                        <div class="table-cell">
+                            Max Volume
+                        </div>
+                        <div class="table-cell">
+                            Max Weight
+                        </div>
+                        <div class="table-cell">
+                            Remark
+                        </div>
+                        <div class="table-cell">
+                            Updated By
+                        </div>
+                        <div class="table-cell">
+                            Updated Timestamp
+                        </div>
+                      
+                       
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let truck of truck_list" (dblclick)= "open_edited(truck)" >
+                        <div class="table-cell" >
+                            <input type="checkbox" *ngIf="is_remove"  class="form-control"  
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_remove_truck(truck)" />
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit" >
+                            {{truck.truck_license}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit" >
+                            {{truck.province}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit">
+                            {{truck.truck_type}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit" >
+                            {{truck.fuel_type}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit">
+                            {{truck.max_speed}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit">
+                            {{truck.max_volume}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit">
+                            {{truck.max_weight}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!truck.is_add&&!truck.is_edit" >
+                            {{truck.remark}}
+                        </div>
+
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="truck.is_edit" >
+                            {{truck.truck_license}}
+                        </div>
+
+                        <div class="table-cell" *ngIf="truck.is_add" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(truck.truck_license==null||truck.truck_license=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="truck.truck_license" >
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(truck.province==null||truck.province=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.province" >
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;" 
+                                [ngStyle]="(truck.truck_type==null||truck.truck_type=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.truck_type">
+                                <option [ngValue]="null">Please select</option>
+                                <option [ngValue]="'4W'">4W</option>
+                                <option [ngValue]="'6W'">6W</option>
+                                <option [ngValue]="'10W'">10W</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;" 
+                                [ngStyle]="(truck.fuel_type==null||truck.fuel_type=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.fuel_type">
+                                <option [ngValue]="null">Please select</option>
+                                <option [ngValue]="'Diesel'">Diesel</option>
+                                <option [ngValue]="'NGV'">NGV</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(truck.max_speed==null||truck.max_speed=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.max_speed" numbersOnly>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(truck.max_volume==null||truck.max_volume=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.max_volume" numbersOnly>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(truck.max_weight==null||truck.max_weight=='') && {'border-color': 'red'}"
+                                [(ngModel)]="truck.max_weight" numbersOnly>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" [(ngModel)]="truck.remark" >
+                        </div>
+
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{truck.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{truck.updated_date | date:'dd/MM/yyyy HH:mm:ss' }}
+                        </div>
+                        <!--
+                        <div class="table-cell" *ngIf="truck.is_edit">
+                            <button type="button" class="btn btn-warning" (click)="edited_truck(truck)"  style="vertical-align: middle">Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="truck.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited(truck)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+
+
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  

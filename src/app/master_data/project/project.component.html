@@ -1,0 +1,161 @@
+
+    <div class="content" (keydown.enter)="search($event)">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Project Code</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    Customer Code :
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                 
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                    
+                </div>
+                 <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove" (click)="add_project()" >
+                   
+                        Add
+                    </button>
+                </div>
+                <div class="col-sm-1">
+
+                     <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove"  (click)="click_remove()" 
+                         >
+                        Remove
+                    </button>
+
+                </div>
+              
+            </div>
+
+            <div class="row margin-30">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" *ngIf="is_remove">
+                        </div>
+                        <div class="table-cell" >
+                            Project Code
+                        </div>
+                        <div class="table-cell" >
+                            Customer Code
+                        </div>
+                        <div class="table-cell" >
+                            Remark
+                        </div>
+                        <div class="table-cell" >
+                            Updated By
+                        </div>
+                        <div class="table-cell" >
+                            Updated Timestamp
+                        </div>
+                        <div class="table-cell" >
+                        </div>
+                        
+                    </div>
+                    <div class="table-row"  *ngFor="let project of project_list" (dblclick)= "open_edited(project)"  >
+                         <div class="table-cell" *ngIf="is_remove" style="vertical-align: middle">
+                            <input type="checkbox" *ngIf="is_remove"  class="form-control"  [value]="project.is_remove"
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_remove_project(project)" />
+              
+                        </div>
+                         <div class="table-cell" [hidden]="project.is_add" style="vertical-align: middle">
+                            {{project.project_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="!project.is_add&&!project.is_edit" style="vertical-align: middle">
+                            {{project.customer_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="!project.is_add&&!project.is_edit" style="vertical-align: middle">
+                            {{project.remark}}
+                        </div>
+                        <div class="table-cell" *ngIf="project.is_add" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control " style="width:150px;vertical-align" 
+                            [ngStyle]="project.project_code==null||project.project_code=='' && {'border-color': 'red'}" 
+                            [(ngModel)]="project.project_code" >
+                        </div>
+                        <div class="table-cell" *ngIf="project.is_add" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantalggg" class="form-control"
+                                [ngStyle]="project.customer_code==null||project.customer_code=='' && {'border-color': 'red'}" 
+                                [(ngModel)]="project.customer_code"
+                            >
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let customer of customer_list"  [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="project.is_edit" style="vertical-align: middle">
+                            {{project.customer_code}}
+                        </div>
+
+                        <div class="table-cell" *ngIf="project.is_add||project.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname"  class="form-control" [(ngModel)]="project.remark" >
+                        </div>
+                        <div class="table-cell" style="vertical-align: middle" >
+                            {{project.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{project.updated_date | date:'dd/MM/yyyy HH:mm:ss' }}
+                        </div>
+                       <!-- 
+                        <div class="table-cell" *ngIf="project.is_add" style="vertical-align: middle">
+                            <button type="button" class="btn btn-success"(click)="save_project()" (keydown.enter)="search()" [disabled]="project.customer_code==''||project.project_code==''?'True':null">Save</button>
+                        </div>
+                        <div class="table-cell" *ngIf="project.is_add">
+                            <button type="button" class="btn btn-danger" (click)="clear_add_project(project)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        
+                        <div class="table-cell" *ngIf="project.is_edit" style="vertical-align: middle">
+                            <button type="button" class="btn btn-warning" (click)="edited_project(project)" >Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="project.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited()" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+
+                        
+                        
+  
+                       
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+  

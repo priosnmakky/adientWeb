@@ -1,0 +1,178 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Pending Order</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4> Customer Code : </h4>
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customer_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4> Project : </h4>
+                </div>
+                <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="project_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                    
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Supplier Code : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="supplier_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let supplier of supplier_list" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Plant Code : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="plant_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let plant of plant_list" [value]="plant.station_code" >{{plant.station_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Due Date From : </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+
+                    <mat-form-field>
+                    <input matInput [matDatepicker]="start" [(ngModel)]="start_date_selected"  placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                    <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+                <div class="col-sm-2 margin-10">
+                    <h4> Due Date To :  </h4>
+                </div>
+                <div class="col-sm-4 margin-10">
+
+                    <mat-form-field>
+                    <input matInput [matDatepicker]="end" [(ngModel)]="end_date_selected"  placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                    <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="search_order_pending()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                            File Id
+                        </div>
+                        <div class="table-cell">
+                            Order Id
+                        </div>
+                        <div class="table-cell">
+                            Supplier
+                        </div>
+                        <div class="table-cell">
+                            Plant
+                        </div>
+                        <div class="table-cell">
+                            Part No
+                        </div>
+                        <div class="table-cell">
+                            Due Date
+                        </div>
+                        <div class="table-cell">
+                            Order Qty
+                        </div>
+                        <div class="table-cell">
+                            Package No
+                        </div>
+                        <div class="table-cell">
+                            Package qty
+                        </div>
+                        <div class="table-cell">
+                            Route&Trip
+                        </div>
+                        <div class="table-cell">
+                            Uploaded By
+                        </div>
+                        <div class="table-cell">
+                            Uploaded TimeStamp
+                        </div>
+
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let order of order_list" >
+                        <div class="table-cell" style="vertical-align: middle" >
+                           {{order.file_id}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.order_id}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.supplier_no}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.plant_no}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.part_number}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                             {{order.due_date}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.order_qty}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.package_no}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.package_qty}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.route_code + "-" +order.route_trip}}
+                        </div>
+                         <div class="table-cell"  style="vertical-align: middle">
+                            {{order.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{order.updated_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+
+
+                    
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  

@@ -1,0 +1,333 @@
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Part Master</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                     <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="customer_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Project Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                     <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="project_selected"
+                     [disabled]="customer_selected==null||customer_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of get_related_project_list(customer_selected)" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Supplier Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                     <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="supplier_selected"
+                        [disabled]="project_selected==null||project_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let supplier of get_related_supplier_list(project_selected)" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                    </select>
+                </div>
+                 <div class="col-sm-2">
+                    <h4>Status :</h4>
+                </div>
+                 <div class="col-sm-4">
+                     <select name="selectedCustomer" id="aantal" class="form-control" [(ngModel)]="status_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option [ngValue]="1">Draft</option>
+                        <option [ngValue]="2">Confirm</option>
+                    </select>
+                </div>
+            </div>
+             <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Part Number :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <input type="text" id="lname" name="lname" class="form-control" [(ngModel)]="partNumber_selected" >
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove||is_confirm" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom"  [hidden] ="is_add||is_edit||is_remove||is_confirm" (click)="is_confirm = !is_confirm" >
+                        Confirm
+                    </button>
+                    <!--
+                    <button type="button" class="btn btn-success" *ngIf="is_confirm"  (click)="update_comfirm_part()" >
+                        Confirm
+                    </button>
+                    -->
+                </div>
+
+                <!--<div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom"  *ngIf="!is_confirm" (click)="is_confirm = !is_confirm" >
+                        Confirm
+                    </button>
+                    <button type="button" class="btn btn-success" *ngIf="is_confirm"  (click)="update_comfirm_part()" >
+                        Confirm
+                    </button>
+                </div>
+ 
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info btn-danger button-custom" (click)="cancle_confire_part()" *ngIf="is_confirm"  >
+                        Clear 
+                    </button>
+                </div>
+                 -->
+                <div class="col-sm-1" *ngIf="!is_add">
+                    <button type="button" class="btn btn-info button-custom"  [hidden] ="is_add||is_edit||is_remove||is_confirm" (click)="add_part()">
+                        Add
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" *ngIf="!is_remove" [hidden] ="is_add||is_edit||is_remove||is_confirm"  (click)="click_remove()" >
+                        Remove
+                    </button>
+                </div>          
+              
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                  
+                        </div>
+                        <div class="table-cell" >
+                            Project Code
+                        </div>
+                        <div class="table-cell">
+                            Status
+                        </div>
+                        <div class="table-cell">
+                            Supplier Code
+                        </div>
+                        <div class="table-cell">
+                            Part Number
+                        </div>
+                        <div class="table-cell">
+                            Part Name
+                        </div>
+                        <div class="table-cell">
+                            Package No
+                        </div>
+                        <div class="table-cell">
+                            Package Volume
+                        </div>
+                        <div class="table-cell">
+                            Part weight
+                        </div>
+                        <div class="table-cell">
+                            Remark
+                        </div>
+                        <div class="table-cell">
+                            Update By
+                        </div>
+                        <div class="table-cell">
+                            Update TimeStamp 
+                        </div>
+                       
+                    </div>
+                    
+                     <div class="table-row"  *ngFor="let part of part_list" (dblclick)= "open_edited(part)"  style="background-color:'yello'" >
+                        <div class="table-cell" >
+                            <input type="checkbox"  *ngIf="is_confirm&&part.status==1" class="form-control"  
+                            [disabled]="part.package_no==''||part.package_no==null||
+                            part.package_volume==null||part.package_volume==''?'True':null" style="width:40px;vertical-align: middle;"  
+                             (change)="add_comfire_part(part)"  />
+
+                             <input type="checkbox"  *ngIf="is_remove" class="form-control"  
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_part_remove(part)" />
+
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!part.is_add&&!part.is_edit">
+
+                            {{part.project_code}}
+                            
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="(!part.is_add&&!part.is_edit)&&part.status==1">
+                            Draft
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="(!part.is_add&&!part.is_edit)&&part.status==2">
+                            Confirm
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!part.is_add&&!part.is_edit">
+
+                            {{part.supplier_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!part.is_add&&!part.is_edit">
+                            {{part.part_number}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!part.is_add&&!part.is_edit">
+                            {{part.part_name}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle"  *ngIf="!part.is_add&&!part.is_edit" >
+                            {{part.package_no}}
+                        </div>
+                        <!--
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="is_confirm" >
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.package_no==null||part.package_no =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.package_no">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  package of package_list" [value]="package.package_no" >{{package.package_no}}</option>
+                            </select>
+                        </div>
+                        -->
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!part.is_add&&!part.is_edit" >
+                            {{part.package_volume | number:'1.2-5' }}
+                        </div>
+                        <!-- <div class="table-cell" *ngIf="is_confirm" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.package_volume==null||part.package_volume =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.package_volume" numbersOnly>
+                        </div> 
+                        -->
+                        <div class="table-cell" *ngIf="!part.is_add&&!part.is_edit" style="vertical-align: middle">
+                            {{part.package_weight | number:'1.2-5'}}
+                        </div>
+                        <div class="table-cell"  *ngIf="!part.is_add&&!part.is_edit" style="vertical-align: middle">
+                            {{part.remark}}
+                        </div>
+
+                        <div class="table-cell" *ngIf="part.is_add" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.project_code==null||part.project_code =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.project_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  project of project_list" [value]="project.project_code" >{{project.project_code}}</option>
+                            </select>
+                        </div>
+                          <div class="table-cell"  style="vertical-align: middle" *ngIf="part.is_edit">
+                            {{part.project_code}}
+                        </div>
+                        
+
+                       
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="(part.is_edit||part.is_add)&&part.status==1">
+                            Draft
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="(part.is_edit||part.is_add)&&part.status==2">
+                            CONFIRM
+                        </div>
+                      
+                        <div class="table-cell" *ngIf="part.is_add" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantal" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.supplier_code==null||part.supplier_code =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.supplier_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let supplier of supplier_list" [value]="supplier.station_code" >{{supplier.station_code}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="part.is_edit">
+                            {{part.supplier_code}}
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_add" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.part_number==null||part.part_number =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.part_number" >
+                        </div>
+                       
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="part.is_edit">
+                            {{part.part_number}}
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_add" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle"
+                                [ngStyle]="(part.part_name==null||part.part_name =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.part_name" >
+                        </div>
+                         <div class="table-cell"  style="vertical-align: middle" *ngIf="part.is_edit">
+                            {{part.part_name}}
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
+                            <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
+                                [ngStyle]="(part.package_no==null||part.package_no =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.package_no">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let  package of package_list" [value]="package.package_no" >{{package.package_no}}</option>
+                            </select>
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" 
+                                [ngStyle]="(part.package_volume==null||part.package_volume =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.package_volume" numbersOnly>
+                        </div>
+                         <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" 
+                                [ngStyle]="(part.package_weight==null||part.package_weight =='') && {'border-color': 'red'}"
+                                [(ngModel)]="part.package_weight" numbersOnly>
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
+                            <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" [(ngModel)]="part.remark">
+                        </div>
+
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{part.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{part.updated_date | date:'dd/MM/yyyy HH:mm:ss' }}
+                        </div>
+
+                        <!--
+                        <div class="table-cell" *ngIf="part.is_add" style="vertical-align: middle" >
+                            <button type="button" class="btn btn-success" (click)="save_part()" 
+                             [disabled]="part.project_code==null||part.project_code==''||
+                                    part.status==null||part.status==''||
+                                    part.supplier_code==null||part.supplier_code==''||
+                                    part.part_number==null||part.part_number==''||
+                                    part.package_no==null||part.package_no==''||
+                                    part.package_volume==null||part.package_volume==''">
+                                Save
+                            </button>
+                        </div>
+                         <div class="table-cell" *ngIf="part.is_edit">
+                            <button type="button" class="btn btn-warning"  
+                            [disabled]="
+                                    part.package_volume==null||part.package_volume==''||
+                                    part.package_weight==null||part.package_weight==''"
+                            (click)="edited_part(part)"  style="vertical-align: middle">Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="part.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited(part)" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  

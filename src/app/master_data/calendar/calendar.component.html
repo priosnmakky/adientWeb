@@ -1,0 +1,228 @@
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 topic-panel text-center">
+                    <h1>Calendar Master</h1>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Customer Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="customer_code_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let customer of customer_list" [value]="customer.customer_code" >{{customer.customer_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Project Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="project_code_selected"
+                    [disabled]="customer_code_selected==null||customer_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let project of get_related_project_list(customer_code_selected)" [value]="project.project_code" >{{project.project_code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-10">
+                <div class="col-sm-2">
+                    <h4>Plant Code :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="plant_code_selected"
+                    [disabled]="project_code_selected==null||project_code_selected==''">
+                        <option [ngValue]="null">Please select</option>
+                        <option *ngFor="let plant of get_related_plantCode_list(project_code_selected)" [value]="plant.station_code" >{{plant.station_code}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Working Day :</h4>
+                </div>
+                 <div class="col-sm-4">
+                    <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="working_day_selected">
+                        <option [ngValue]="null">Please select</option>
+                        <option [ngValue]="'True'">Yes</option>
+                        <option [ngValue]="'False'">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row margin-30">
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" (click)="reload()" >
+                        Search
+                    </button>
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info button-custom" (click)="downloadCSV()" >
+                        Download as CSV
+                    </button>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                   <button type="button" class="btn btn-info btn-danger" *ngIf="is_add||is_edit||is_remove" (click)="reload()">
+                        Cancel 
+                    </button>
+                </div>
+                
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-info button-custom" [hidden] ="is_add||is_edit||is_remove" (click)="click_remove()" >
+                        Remove
+                    </button>
+               
+                </div>
+                <div class="col-sm-2">
+                </div>
+              
+              
+            </div>
+
+            <div class="row margin-30" style="overflow-x:auto;">
+                <div class="table">
+                    <div class="table-row header blue">
+                        <div class="table-cell" >
+                  
+                        </div>
+                        <div class="table-cell" >
+                            Plant
+                        </div>
+                        <div class="table-cell">
+                            Day
+                        </div>
+                        <div class="table-cell">
+                            Date
+                        </div>
+                        <div class="table-cell">
+                            Working Day
+                        </div>
+                        <div class="table-cell">
+                            Remark
+                        </div>
+                        <div class="table-cell">
+                            Update By
+                        </div>
+                        <div class="table-cell">
+                            Update Time
+                        </div>
+                       
+                    </div>
+                    
+                     <div class="table-row" *ngFor="let calendarMaster of calendarMaster_lsit" (dblclick)= "open_edited(calendarMaster)">
+                        <div class="table-cell" >
+                           <input type="checkbox" *ngIf="is_remove"  class="form-control"  
+                                 style="width:40px;vertical-align: middle;"  
+                             (change)="add_remove_calendarMaster(calendarMaster)" />
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{calendarMaster.plant_code}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle"  >
+                            {{calendarMaster.day | covert_day}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{calendarMaster.date | date:'dd/MM/yyyy HH:mm'}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!calendarMaster.is_add&&!calendarMaster.is_edit" >
+                            {{calendarMaster.is_working ?  'Yes' : 'No'}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" *ngIf="!calendarMaster.is_add&&!calendarMaster.is_edit" >
+                            {{calendarMaster.remark}}
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                            <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="calendarMaster.is_working">
+                                <option [ngValue]="null">Please select</option>
+                                <option [ngValue]="true">Yes</option>
+                                <option [ngValue]="false">No</option>
+                            </select>  
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" [(ngModel)]="calendarMaster.remark" >   
+                        </div>
+                        <!--
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+
+                           <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="calendarMaster.plant_code">
+                                <option [ngValue]="null">Please select</option>
+                                <option *ngFor="let plant of plant_list" [value]="plant.station_code" >{{plant.station_code}}</option>
+                            </select>
+                            
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                           <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="calendarMaster.day">
+                                <option [ngValue]="null">Please select</option>
+                                <option [ngValue]="1">จันทร์</option>
+                                <option [ngValue]="2">อังคาร</option>
+                                <option [ngValue]="3">พุธ</option>
+                                <option [ngValue]="4">พฤหัสบดี</option>
+                                <option [ngValue]="5">ศุกร์</option>
+                                <option [ngValue]="6">เสาร์</option>
+                                <option [ngValue]="7">อาทิตย์</option>
+                            </select> 
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                           <mat-form-field>
+                              <input matInput [matDatepicker]="date" [(ngModel)]="calendarMaster.date"  placeholder="Choose a date">
+                                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                                <mat-datepicker #date></mat-datepicker>
+                            </mat-form-field>   
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                            <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="calendarMaster.is_working">
+                                <option [ngValue]="null">Please select</option>
+                                <option [ngValue]="true">Yes</option>
+                                <option [ngValue]="false">No</option>
+                            </select>  
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add||calendarMaster.is_edit" style="vertical-align: middle" >
+                            <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" [(ngModel)]="calendarMaster.remark" >   
+                        </div>
+                        -->
+                        
+                        <div class="table-cell"  style="vertical-align: middle">
+                            {{calendarMaster.updated_by}}
+                        </div>
+                        <div class="table-cell"  style="vertical-align: middle" >
+                            {{calendarMaster.updated_date | date:'dd/MM/yyyy HH:mm:ss'}}
+                        </div>
+                        <!--
+                         <div class="table-cell" *ngIf="calendarMaster.is_add">
+                            <button type="button" class="btn btn-success" (click)="save_calendarMaster(calendarMaster)"  
+                            [disabled]= "calendarMaster.plant_code==null||calendarMaster.plant_code==''||
+                            calendarMaster.day==null||calendarMaster.day==''||
+                            calendarMaster.date==null||
+                            calendarMaster.is_working==null
+                            " 
+                            style="vertical-align: middle">save</button>
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_add">
+                            <button type="button" class="btn btn-danger" (click)="clear_add_calendarMaster(calendarMaster)" style="vertical-align: middle" >Clear</button>
+                        </div>
+
+                        <div class="table-cell" *ngIf="calendarMaster.is_edit">
+                            <button type="button" class="btn btn-warning" (click)="edited_calendarMaster(calendarMaster)"  
+                            [disabled]= "calendarMaster.plant_code==null||calendarMaster.plant_code==''||
+                            calendarMaster.day==null||calendarMaster.day==''||
+                            calendarMaster.date==null||
+                            calendarMaster.is_working==null
+                            " 
+                            style="vertical-align: middle">Edit</button>
+                        </div>
+                        <div class="table-cell" *ngIf="calendarMaster.is_edit">
+                            <button type="button" class="btn btn-danger" (click)="clear_edited()" style="vertical-align: middle" >Clear</button>
+                        </div>
+                        -->
+                    </div>
+  
+            </div>
+        </div>
+    </div>
+    
+
+
+  
