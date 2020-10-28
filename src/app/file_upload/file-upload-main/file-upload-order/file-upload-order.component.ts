@@ -151,7 +151,7 @@ export class FileUploadOrderComponent implements OnInit {
             .subscribe({
                 next: (files:any) => {
 
-                  console.log(files);
+                  console.log(files)
                   this.fileList = files;
 
                 },
