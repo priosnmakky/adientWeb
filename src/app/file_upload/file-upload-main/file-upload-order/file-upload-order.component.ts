@@ -84,7 +84,6 @@ export class FileUploadOrderComponent implements OnInit {
                   }
                   else
                   {
-                    console.log(response)
                     this.validateErrorList = response.validate_error_list
                     this.alertService.error(response.massage, this.options)
 
@@ -149,11 +148,9 @@ export class FileUploadOrderComponent implements OnInit {
     this.uploadFilesService.getFiles()
             .pipe(first())
             .subscribe({
-                next: (files:any) => {
+                next: (response:any) => {
 
-                  console.log(files)
-                  this.fileList = files;
-
+                  this.fileList = response.data_list;
                 },
                 error: error => {
                 }
