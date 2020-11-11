@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
-
+import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService {
@@ -14,10 +13,10 @@ export class CustomerService {
     ) {
 
     }
-
+   
     getCustomer() {
 
-         return this.http.get<any>(' http://127.0.0.1:8080/api/customers' )
+         return this.http.get<any>(`${environment.apiUrl}/api/customers` )
             .pipe(map(customer => {
                 return customer;
             }));

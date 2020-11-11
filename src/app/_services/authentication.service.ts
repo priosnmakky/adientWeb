@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 
@@ -26,9 +25,9 @@ export class AuthenticationService {
             return this.userSubject.value;
         
     }
-
+  
     login(username: string, password: string) {
-        return this.http.post<any>('http://127.0.0.1:8080/auth/jwt/create/', { username, password })
+        return this.http.post<any>(`${environment.apiUrl}/auth/jwt/create/`, { username, password })
             .pipe(map(user => {
                 console.log(user)
                 localStorage.setItem('refresh',user.refresh );
@@ -38,12 +37,12 @@ export class AuthenticationService {
                 return user;
             }));
     }
-
+    
     getUsername()
     {   
 
         let headers = { headers: new HttpHeaders().set('Authorization', `Bearer ${this.userValue.access}`) };
-        return this.http.get<any>('http://127.0.0.1:8080/auth/users/me/', headers)
+        return this.http.get<any>(`${environment.apiUrl}/auth/users/me/`, headers)
             .pipe(map(user => {
 
                 localStorage.setItem('user_detail',JSON.stringify(user) );
@@ -65,7 +64,7 @@ export class AuthenticationService {
             let headers = new HttpHeaders();
             let refresh = localStorage.getItem('refresh')
             // headers = headers.set('Authorization', 'Bearer ' + '');
-            return this.http.post<any>('http://127.0.0.1:8080/auth/jwt/refresh', {refresh: refresh}, )
+            return this.http.post<any>(`${environment.apiUrl}/auth/jwt/refresh`, {refresh: refresh}, )
                 .pipe(map((user) => {
                     console.log(user)
                     // let refresh = localStorage.getItem('refresh')

@@ -5,8 +5,6 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Project,Customer ,Station,Part,Package,Truck,Driver,RouteInfo,CalendarMaster,RouteMaster} from '@app/_models';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class MasterDataService {
 
@@ -26,7 +24,7 @@ export class MasterDataService {
 
     get_project_list() {
 
-        return this.http.get<any>('http://127.0.0.1:8080/api/master/project' )
+        return this.http.get<any>(`${environment.apiUrl}/api/master/project` )
            .pipe(map(projects => {
  
                return  new Project().deserialize(projects);
@@ -34,20 +32,21 @@ export class MasterDataService {
            }));;
 
    }
+
    get_package_list() {
 
-    return this.http.get<any>('http://127.0.0.1:8080/api/master/package' )
-       .pipe(map(packages => {
+        return this.http.get<any>(`${environment.apiUrl}/api/master/package`)
+        .pipe(map(packages => {
 
            return  new Package().deserialize(packages);
 
        }));;
 
-}
+    }   
 
     get_customer_list() {
 
-        return this.http.get<any>('http://127.0.0.1:8080/api/master/customer' )
+        return this.http.get<any>(`${environment.apiUrl}/api/master/customer`)
            .pipe(map(customer => {
 
                return  new Customer().deserialize(customer);
@@ -58,7 +57,7 @@ export class MasterDataService {
 
    get_route_list() {
 
-    return this.http.get<any>('http://127.0.0.1:8080/api/master/routeMaster' )
+    return this.http.get<any>(`${environment.apiUrl}/api/master/routeMaster` )
        .pipe(map(response => {
 
            return  response;
@@ -70,7 +69,7 @@ export class MasterDataService {
    seach_project(customer_code:string,project_code:string) {
 
     
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_project',
+        return this.http.post(`${environment.apiUrl}api/master/seach_project`,
         { 
             customer_code: customer_code,
             project_code: project_code
@@ -90,7 +89,7 @@ export class MasterDataService {
     seach_customer(customer_code:string,project_code:string,stationCode_selected:string) {
 
         console.log(project_code)
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_customer',
+        return this.http.post(`${environment.apiUrl}/api/master/seach_customer`,
         { 
             customer_code: customer_code,
             project_code: project_code,
@@ -106,17 +105,6 @@ export class MasterDataService {
         }));;
 
     }
-
-    // return this.http.post('http://127.0.0.1:8080/api/upload',
-    // formData,
-    // {
-    //     headers: headers
-    // }
-    // ).pipe(map(response => {
-        
-    //     return response;
-        
-    // }));;
 
     add_project(project:Project[]) {
 
@@ -164,21 +152,7 @@ export class MasterDataService {
         }));;
     }
 
-    // add_package(packages:Package) {
-
-
-    //     return this.http.post(`${environment.apiUrl}/api/master/package`, 
-    //     packages,
-    //         {
-    //             headers: this.headers
-    //         }
-    //     )
-    //     .pipe(map(packages => {
-
-    //         return  new Package().deserialize(packages);
-
-    //     }));;
-    // }
+   
 
    deleted_project(project:string[]) {
 
@@ -338,7 +312,7 @@ export class MasterDataService {
     seach_part(customer_selected:string,project_selected:string,supplier_selected:string,status_selected:string,partNumber_selected:string) {
 
         
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_part',
+        return this.http.post(`${environment.apiUrl}/api/master/seach_part`,
         { 
             customer_selected: customer_selected,
             project_selected:project_selected,
@@ -390,7 +364,7 @@ export class MasterDataService {
 
    seach_package(customer_selected:string,project_selected:string,supplier_selected:string,packageCode_selected:string,packageNo_selected:string) {
 
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_package',
+        return this.http.post(`${environment.apiUrl}/api/master/seach_package`,
         { 
             customer_selected:customer_selected,
             project_selected: project_selected,
@@ -412,7 +386,7 @@ export class MasterDataService {
 
     seach_truck(truck_license:string,truck_province:string,truck_type:string,truck_fuel:string) {
   
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_truck',
+        return this.http.post(`${environment.apiUrl}/api/master/seach_truck`,
         { 
             truck_licese: truck_license,
             truck_province:truck_province,
@@ -449,7 +423,7 @@ export class MasterDataService {
     seach_driver(driver_code:string,driver_name:string) {
 
         
-        return this.http.post('http://127.0.0.1:8080/api/master/seach_driver',
+        return this.http.post(`${environment.apiUrl}/api/master/seach_driver`,
         { 
             driver_code: driver_code,
             driver_name:driver_name,
@@ -514,7 +488,7 @@ export class MasterDataService {
         ) {
 
         
-        return this.http.post('http://127.0.0.1:8080/api/master/search_route_info',
+        return this.http.post(`${environment.apiUrl}/api/master/search_route_info`,
         { 
             customer_code_selected: customer_code_selected,
             project_code_selected:project_code_selected,
@@ -601,7 +575,7 @@ export class MasterDataService {
         trip_no_selected 
         ) {
   
-        return this.http.post('http://127.0.0.1:8080/api/master/search_route_master',
+        return this.http.post(`${environment.apiUrl}/api/master/search_route_master`,
         { 
             customer_code_selected: customer_code_selected,
             project_code_selected:project_code_selected,
@@ -626,7 +600,7 @@ export class MasterDataService {
         const formData = new FormData();
         console.log(file)
         formData.append('file', file);
-        return this.http.post('http://127.0.0.1:8080/api/master/upload_route_master',
+        return this.http.post(`${environment.apiUrl}/api/master/upload_route_master`,
                             formData
                             ).pipe(map(response => {
                                 
@@ -657,7 +631,7 @@ export class MasterDataService {
         working_day_selected
         ) {
   
-        return this.http.post('http://127.0.0.1:8080/api/master/search_calendarMaster',
+        return this.http.post(`${environment.apiUrl}/api/master/search_calendarMaster`,
         { 
             customer_code_selected: customer_code_selected,
             project_code_selected:project_code_selected,
@@ -710,7 +684,7 @@ export class MasterDataService {
         formData.append('file', file);
         formData.append('customer_id', customer_id);
         formData.append('project_id', project_id);
-        return this.http.post('http://127.0.0.1:8080/api/upload',
+        return this.http.post(`${environment.apiUrl}/api/upload`,
                             formData
                             ).pipe(map(response => {
                                 

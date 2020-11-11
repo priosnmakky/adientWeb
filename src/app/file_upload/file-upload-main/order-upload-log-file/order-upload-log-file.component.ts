@@ -57,6 +57,7 @@ export class OrderUploadLogFileComponent implements OnInit {
 
   reload()
   {
+    this.file_list = []
     this.get_file_log()
   }
 

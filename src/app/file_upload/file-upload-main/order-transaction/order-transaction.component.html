@@ -64,7 +64,7 @@
                 <div class="col-sm-4 margin-10">
                     <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="order_selected">
                         <option [ngValue]="null">Please select</option>
-                        <option *ngFor="let order of order_list" [value]="order.order_id" >{{order.order_id}}</option>
+                        <option *ngFor="let order of order_list" [value]="order.order_no" >{{order.order_no}}</option>
                     </select> 
                 </div>
                 <div class="col-sm-2 margin-10">
@@ -157,19 +157,19 @@
                            {{order.action}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.file_id}}
+                            {{order.file_no}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.order_id}}
+                            {{order.order_no}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.supplier}}
+                            {{order.supplier_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.plant}}
+                            {{order.plant_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.part_no}}
+                            {{order.part_number}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
                             {{order.part_name}}
@@ -190,10 +190,10 @@
                             {{order.route_trip}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.uploaded_by}}
+                            {{order.updated_by}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{order.uploaded_timestamp | date:'dd/MM/yyyy HH:mm'}}
+                            {{order.updated_date | date:'dd/MM/yyyy HH:mm'}}
                         </div>
                     </div>
   

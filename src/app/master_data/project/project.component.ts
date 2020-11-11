@@ -6,6 +6,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Project,Customer } from '@app/_models';
 import { AlertService } from '../../_alert';
 import { ConfirmationDialogService } from '../../_helpers/confirmation-dialog/confirmation-dialog.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-project',
@@ -278,7 +279,7 @@ export class ProjectComponent implements OnInit {
 
   downloadCSV(){
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url);
   }
 
   search(event)

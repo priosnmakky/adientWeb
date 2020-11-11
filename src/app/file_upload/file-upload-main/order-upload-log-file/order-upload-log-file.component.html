@@ -102,10 +102,10 @@
                            <td (click)="downloadCSVFile(file.file_no)" ><img src="/assets/img/csv-icon.png" alt="image" class="csv-icon"></td>
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{file.customer_id}}
+                            {{file.customer_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{file.project_id}}
+                            {{file.project_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
                             {{file.file_no}}
@@ -120,10 +120,10 @@
                             Confirm
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{file.created_by}}
+                            {{file.updated_by}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
-                            {{file.created_date | date:'dd/MM/yyyy HH:mm:ss':''}}
+                            {{file.updated_date | date:'dd/MM/yyyy HH:mm:ss':''}}
                         </div>
                        
                     </div>

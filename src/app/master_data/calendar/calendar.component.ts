@@ -5,6 +5,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { AlertService } from '../../_alert';
 import { RouteInfo, Truck, Driver,CalendarMaster} from '@app/_models';
 import { ConfirmationDialogService } from '../../_helpers/confirmation-dialog/confirmation-dialog.service';
+import { environment } from '@environments/environment';
+
 
 @Component({
   selector: 'app-calendar',
@@ -320,7 +322,7 @@ export class CalendarComponent implements OnInit {
   }
   downloadCSV(){
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url);
   }
 
   handleKeyboardEvent(event: KeyboardEvent) {

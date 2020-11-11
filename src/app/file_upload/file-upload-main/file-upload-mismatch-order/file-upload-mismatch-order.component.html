@@ -110,6 +110,7 @@
                         <div class="table-cell" >Supplier</div>
                         <div class="table-cell" >Plant</div>
                         <div class="table-cell" >Part No</div>
+                        <div class="table-cell" >Part Name</div>
                         <div class="table-cell" >Due Date</div>
                         <div class="table-cell" >Order Qty</div>
                         <div class="table-cell" >Package No</div>
@@ -132,19 +133,22 @@
                             <img src="/assets/img/cross_green_check.png" alt="image" class="csv-icon">
                         </div>
                          <div class="table-cell" >
-                            {{order.file_id}}
+                            {{order.file_no}}
                         </div>
                         <div class="table-cell" >
-                            {{order.order_id}}
+                            {{order.order_no}}
                         </div>
                         <div class="table-cell" >
-                            {{order.supplier_no}}
+                            {{order.supplier_code}}
                         </div>
                         <div class="table-cell" >
-                            {{order.plant_no}}
+                            {{order.plant_code}}
                         </div>
                         <div class="table-cell" >
                             {{order.part_number}}
+                        </div>
+                        <div class="table-cell" >
+                            {{order.part_name}}
                         </div>
                         <div class="table-cell" >
                             {{order.due_date}}

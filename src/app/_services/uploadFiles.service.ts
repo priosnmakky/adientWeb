@@ -4,7 +4,6 @@ import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 
-
 @Injectable({ providedIn: 'root' })
 export class UploadFilesService {
 
@@ -34,7 +33,7 @@ export class UploadFilesService {
 
     getFiles() {
     
-        return this.http.get<any>('http://127.0.0.1:8080/api/files',
+        return this.http.get<any>(`${environment.apiUrl}/api/files`,
                         
                             ).pipe(map(response => {
                                 
@@ -47,7 +46,7 @@ export class UploadFilesService {
 
     confirm() {
    
-        return this.http.get<any>('http://127.0.0.1:8080/api/comfirm',
+        return this.http.get<any>(`${environment.apiUrl}/api/comfirm`,
                                
                             ).pipe(map(response => {
                                 
@@ -63,7 +62,7 @@ export class UploadFilesService {
     
     
         const formData = new FormData();
-        return this.http.post<any>('http://127.0.0.1:8080/api/not_comfirm',
+        return this.http.post<any>(`${environment.apiUrl}/api/not_comfirm`,
                                 formData
                             ).pipe(map(response => {
                                 
@@ -86,7 +85,7 @@ export class UploadFilesService {
     {
     
      
-        return this.http.post<any>('http://127.0.0.1:8080/api/search_miss_match',
+        return this.http.post<any>(`${environment.apiUrl}/api/search_miss_match`,
                                 { 
                                     customer_selected : customer_selected,
                                     project_selected : project_selected,
@@ -114,7 +113,7 @@ export class UploadFilesService {
 {
 
   
-    return this.http.post<any>('http://127.0.0.1:8080/api/search_pending_order',
+    return this.http.post<any>(`${environment.apiUrl}/api/search_pending_order`,
                             { 
                                 customer_selected : customer_selected,
                                 project_selected : project_selected,
@@ -140,7 +139,7 @@ search_upload_order_log_file(
 )
 {
 
-    return this.http.post<any>('http://127.0.0.1:8080/api/search_upload_order_log_file',
+    return this.http.post<any>(`${environment.apiUrl}/api/search_upload_order_log_file`,
                             { 
                                 customer_selected : customer_selected,
                                 project_selected : project_selected,
@@ -160,7 +159,7 @@ search_upload_order_log_file(
     match_order()
     {
 
-        return this.http.post<any>('http://127.0.0.1:8080/api/match_order',
+        return this.http.post<any>(`${environment.apiUrl}/api/match_order`,
                                 { 
                                    
                                 }
@@ -175,7 +174,7 @@ search_upload_order_log_file(
 
     get_files()
     {
-        return this.http.get<any>('http://127.0.0.1:8080/api/get_files',
+        return this.http.get<any>(`${environment.apiUrl}/api/get_files`,
                                 { 
                                    
                                 }
@@ -190,7 +189,7 @@ search_upload_order_log_file(
 
     get_order()
     {
-        return this.http.get<any>('http://127.0.0.1:8080/api/get_order',
+        return this.http.get<any>(`${environment.apiUrl}/api/get_order`,
                                 { 
                                    
                                 }
@@ -216,7 +215,7 @@ search_upload_order_log_file(
     )
     {
     
-        return this.http.post<any>('http://127.0.0.1:8080/api/search_order_transaction',
+        return this.http.post<any>(`${environment.apiUrl}/api/search_order_transaction`,
                                 { 
                                     customer_selected : customer_selected,
                                     project_selected : project_selected,
@@ -237,52 +236,4 @@ search_upload_order_log_file(
     
     }
 
-   
-    // getUserFromToken(token:string){
-
-
-    //     let headers = new HttpHeaders();
-    //     headers = headers.set('Authorization', 'Bearer ' + token);
-
-    //      return this.http.get<any>('http://127.0.0.1:8080/auth/users/me/',
-    //                             {
-    //                                 headers: headers
-    //                             }
-    //                         ).pipe(map(user => {
-    //                             localStorage.setItem('user', JSON.stringify(user));
-    //                             this.userSubject.next(user);
-    //                             return user;
-
-    //                         }));;
-
-    // }
-
-    // logout() {
-
-
-    //     localStorage.removeItem('user');
-    //     this.stopRefreshTokenTimer();
-    //     this.userSubject.next(null);
-    //     this.router.navigate(['/login']);
-
-
-    // }
-
-
-
-
-    // private startRefreshTokenTimer(refreshToken : string) {
-
-
-    //     const expires = new Date(3600);
-    //     const timeout = expires.getTime() - Date.now() - (60 * 1000);
-    //     this.refreshTokenTimeout = setTimeout(() => refreshToken, timeout);
-
-    // }
-
-    // private stopRefreshTokenTimer() {
-
-
-    //     clearTimeout(this.refreshTokenTimeout);
-    // }
 }

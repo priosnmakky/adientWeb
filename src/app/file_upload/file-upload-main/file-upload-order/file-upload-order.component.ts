@@ -57,6 +57,12 @@ export class FileUploadOrderComponent implements OnInit {
     this.spinner.hide();
 
   }
+
+  reload()
+  {
+    this.fileList = []
+    this.getFiles();
+  }
   get f(){
     return this.myForm.controls;
   }
@@ -176,7 +182,7 @@ export class FileUploadOrderComponent implements OnInit {
                   {
                     
                     this.alertService.success(response.massage, this.options)
-                    this.ngOnInit()
+                    this.reload()
                     // this.changeState("upload-mismatch-order");
                   }
                   else
@@ -204,7 +210,7 @@ export class FileUploadOrderComponent implements OnInit {
                   {
                     
                     this.alertService.success(response.massage, this.options)
-                    this.getFiles();
+                    this.reload();
                     // this.changeState("upload-mismatch-order");
                   }
                   else
@@ -231,7 +237,7 @@ export class FileUploadOrderComponent implements OnInit {
                 next: (response:any) => {
 
                   
-                  this.getFiles()
+                  this.reload()
                 },
                 error: error => {
                   console.log(error);

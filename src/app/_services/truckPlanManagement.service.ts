@@ -5,8 +5,6 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Order,RouteMaster} from '@app/_models';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class TruckPlanManagementService {
 

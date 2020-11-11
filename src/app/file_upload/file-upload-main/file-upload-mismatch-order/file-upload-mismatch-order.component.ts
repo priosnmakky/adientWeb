@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AlertService } from '../../../_alert';
-
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-file-upload-mismatch-order',
@@ -184,7 +184,7 @@ export class FileUploadMismatchOrderComponent implements OnInit {
                   }
                   else
                   {
-                    this.alertService.error('Error', this.options)
+                    this.alertService.error(response.massage, this.options)
                   }
                           
                 },
@@ -223,14 +223,9 @@ export class FileUploadMismatchOrderComponent implements OnInit {
   
   }
 
-  // match_order()
-  // {
-  //   this.status = 2;
-  // }
   downloadCSV()
   {
-
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url_str);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url_str);
   }
 
 

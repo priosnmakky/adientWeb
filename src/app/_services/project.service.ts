@@ -4,12 +4,7 @@ import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {Observable,of, from } from 'rxjs';
 import { Project } from '@app/_models';
-
-
-
-
-
-
+import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -21,16 +16,9 @@ export class ProjectService {
 
     }
 
-
-    // getUser(): Observable<Project[]> {
-    //     return this.http.get('/api/user').
-    //     pipe(map((res: Response) => res.json().response.map((porject: Project) => new Project().deserialize(Project))));
-    //   }
-
-
     get_project_list() {
 
-         return this.http.get<any>('http://127.0.0.1:8080/api/master/project' )
+         return this.http.get<any>(`${environment.apiUrl}/api/master/project` )
             .pipe(map(projects => {
                 console.log(projects);
                 return  new Project().deserialize(projects);

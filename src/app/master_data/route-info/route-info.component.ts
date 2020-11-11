@@ -5,6 +5,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { AlertService } from '../../_alert';
 import { RouteInfo, Truck, Driver} from '@app/_models';
 import { ConfirmationDialogService } from '../../_helpers/confirmation-dialog/confirmation-dialog.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-route',
@@ -346,7 +347,7 @@ export class RouteInfoComponent implements OnInit {
 
   downloadCSV(){
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url);
   }
 
   open_edited(routeInfo:RouteInfo)

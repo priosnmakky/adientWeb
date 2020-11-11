@@ -67,7 +67,7 @@ export class OrderTransactionComponent implements OnInit {
     this.get_plant_list()
     this.get_file_list()
     this.get_order()
-    // this.search_order_transaction()
+    
   }
 
   get_customer_list()
