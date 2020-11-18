@@ -22,7 +22,7 @@ export class CustomerComponent implements OnInit {
   customer_list_database : Customer[] = []
   customer_list : Customer[] = []
   customer_selected : string
-  stationCode_selected : string = null
+  stationCode_selected : string = ''
 
   options = {
     autoClose: true,
@@ -66,7 +66,7 @@ export class CustomerComponent implements OnInit {
     this.is_add = false
     this.is_edit = false
     this.get_customer_list()
-    this.seach_customer()
+    this.search_customer()
     this.get_project_list()
 
   }
@@ -230,9 +230,9 @@ export class CustomerComponent implements OnInit {
     this.customer_reomve_list = []
   }
 
-  seach_customer()
+  search_customer()
   {
-    this.master_data_service.seach_customer(this.customer_selected,this.project_selected,this.stationCode_selected)
+    this.master_data_service.search_customer(this.customer_selected,this.project_selected,this.stationCode_selected)
             .pipe(first())
             .subscribe({
                 next: (response:any) => {

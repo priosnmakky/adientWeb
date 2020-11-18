@@ -66,10 +66,10 @@ export class MasterDataService {
 
 }
 
-   seach_project(customer_code:string,project_code:string) {
+   search_project(customer_code:string,project_code:string) {
 
     
-        return this.http.post(`${environment.apiUrl}api/master/seach_project`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_project`,
         { 
             customer_code: customer_code,
             project_code: project_code
@@ -86,10 +86,10 @@ export class MasterDataService {
 
     }
 
-    seach_customer(customer_code:string,project_code:string,stationCode_selected:string) {
+    search_customer(customer_code:string,project_code:string,stationCode_selected:string) {
 
         console.log(project_code)
-        return this.http.post(`${environment.apiUrl}/api/master/seach_customer`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_customer`,
         { 
             customer_code: customer_code,
             project_code: project_code,
@@ -106,7 +106,7 @@ export class MasterDataService {
 
     }
 
-    add_project(project:Project[]) {
+    add_project(project:Project) {
 
         return this.http.post(`${environment.apiUrl}/api/master/project`, 
             project,
@@ -309,10 +309,10 @@ export class MasterDataService {
            }));
 }   
 
-    seach_part(customer_selected:string,project_selected:string,supplier_selected:string,status_selected:string,partNumber_selected:string) {
+    search_part(customer_selected:string,project_selected:string,supplier_selected:string,status_selected:string,partNumber_selected:string) {
 
         
-        return this.http.post(`${environment.apiUrl}/api/master/seach_part`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_part`,
         { 
             customer_selected: customer_selected,
             project_selected:project_selected,
@@ -324,9 +324,9 @@ export class MasterDataService {
         {
             headers: this.headers
         }
-        ).pipe(map(response => {
+        ).pipe(map(part => {
             
-            return response;
+            return  new Part().deserialize(part);
             
         }));;
 
@@ -362,9 +362,9 @@ export class MasterDataService {
            }));;
    }
 
-   seach_package(customer_selected:string,project_selected:string,supplier_selected:string,packageCode_selected:string,packageNo_selected:string) {
+   search_package(customer_selected:string,project_selected:string,supplier_selected:string,packageCode_selected:string,packageNo_selected:string) {
 
-        return this.http.post(`${environment.apiUrl}/api/master/seach_package`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_package`,
         { 
             customer_selected:customer_selected,
             project_selected: project_selected,
@@ -696,14 +696,14 @@ export class MasterDataService {
 
         const formData = new FormData();
         formData.append('file', image_file);
-        formData.append('package_code',packages.package_code);
-        formData.append('package_no',packages.package_no);
-        formData.append('snp',packages.snp +"");
-        formData.append('width',packages.width +"");
-        formData.append('length',packages.length +"");
-        formData.append('height',packages.height +"");
-        formData.append('weight',packages.weight +"");
-        formData.append('station_code',packages.station_code +"");
+        formData.append('packages',JSON.stringify(packages));
+        // formData.append('package_no',packages.package_no);
+        // formData.append('snp',packages.snp +"");
+        // formData.append('width',packages.width +"");
+        // formData.append('length',packages.length +"");
+        // formData.append('height',packages.height +"");
+        // formData.append('weight',packages.weight +"");
+        // formData.append('station_code',packages.station_code +"");
 
 
         return this.http.post(`${environment.apiUrl}/api/master/package`, 
@@ -723,17 +723,8 @@ export class MasterDataService {
 
         const formData = new FormData();
         formData.append('file', image_file);
-        formData.append('snp',packages.snp+"");
-        formData.append('package_code',packages.package_code);
-        formData.append('package_no',packages.package_no);
-        formData.append('width',packages.width +"");
-        formData.append('length',packages.length +"");
-        formData.append('height',packages.height +"");
-        formData.append('weight',packages.weight +"");
-        formData.append('station_code',packages.station_code +"");
-        formData.append('image_url',packages.image_url +"");
-
-
+        formData.append('packages',JSON.stringify(packages));
+     
         return this.http.post(`${environment.apiUrl}/api/master/edited_package`, 
         formData
             ,
@@ -778,6 +769,20 @@ export class MasterDataService {
         }));;
     }
 
+    change_number_null(number: any){
+
+        if(number == '' || isNaN(number))
+        {
+            return null
+        }
+        else 
+        {
+
+            return number
+        }
+    
+    }
+      
 
 
 

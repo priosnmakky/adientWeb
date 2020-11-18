@@ -29,7 +29,7 @@ export class PartComponent implements OnInit {
   package_list :  Package [] = []
   package_selected:string = null
 
-  partNumber_selected:string = null
+  partNumber_selected:string = ''
 
   part_list : Part [] = []
 
@@ -88,7 +88,7 @@ export class PartComponent implements OnInit {
     this.is_remove = false;
     this.part_confirm_list = []
     this.part_reomve_list = []
-    this.seach_part()
+    this.search_part()
 
   }
   get_project_list()
@@ -195,9 +195,9 @@ export class PartComponent implements OnInit {
     return this.supplier_list.filter(p => p.project_code == project_selected)
   }
 
-  seach_part()
+  search_part()
   {
-    this.master_data_service.seach_part(
+    this.master_data_service.search_part(
       this.customer_selected,
       this.project_selected,
       this.supplier_selected,
@@ -323,6 +323,7 @@ export class PartComponent implements OnInit {
             });
   
   }
+
   save_part()
   {
     let part_obj = this.part_list.filter(p => p.is_add == true)[0] 
@@ -413,15 +414,13 @@ export class PartComponent implements OnInit {
   clear_edited(customer)
   {
     this.ngOnInit()
-    this.seach_part()
+    this.reload()
   }
 
   handleKeyboardEvent(event: KeyboardEvent) {
     if(event.key == 'Enter')
     {
 
-      console.log("sdfsdfsdfsdf")
-      console.log(this.is_edit)
       if(this.is_add)
       {
         this.save_part()

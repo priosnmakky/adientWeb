@@ -11,6 +11,12 @@ export class NumberDirective {
   @HostListener('input', ['$event']) onInputChange(event) {
     const initalValue = this._el.nativeElement.value;
     this._el.nativeElement.value = initalValue.replace(/[^0-9|.]*/g, '');
+
+    if(this._el.nativeElement.value === '')
+    {
+      this._el.nativeElement.value  = null
+      event.stopPropagation();
+    }
     if ( initalValue !== this._el.nativeElement.value) {
       event.stopPropagation();
     }

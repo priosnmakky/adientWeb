@@ -29,8 +29,8 @@ export class PackageComponent implements OnInit {
   project_selected:string = null
   supplier_selected:string = null
   customer_selected:string = null
-  packageCode_selected:string = null
-  packageNo_selected:string = null
+  packageCode_selected:string = ''
+  packageNo_selected:string = ''
 
   is_add:boolean = false
   is_edit:boolean = false
@@ -81,7 +81,7 @@ export class PackageComponent implements OnInit {
     this.image_file = null
     this.image_url = ""
     this.get_package_list()
-    this.seach_package()
+    this.search_package()
 
   }
 
@@ -192,9 +192,9 @@ export class PackageComponent implements OnInit {
     return this.supplier_list.filter(p => p.project_code == project_code_selected)
   }
 
-  seach_package()
+  search_package()
   {
-    this.master_data_service.seach_package(
+    this.master_data_service.search_package(
         this.customer_selected,
         this.project_selected,
         this.supplier_selected,
@@ -240,7 +240,7 @@ export class PackageComponent implements OnInit {
     add_package_obj.length = null;
     add_package_obj.height = null;
     add_package_obj.weight = null;
-    add_package_obj.image_url = null
+    add_package_obj.image_url = ''
     add_package_obj.updated_by = user.username;;
     add_package_obj.updated_date = new Date;
     add_package_obj.is_add = true;

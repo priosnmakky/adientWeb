@@ -55,14 +55,13 @@ export class ProjectComponent implements OnInit {
   reload()
   {
  
-    // this.csv_url = null
     this.project_list_database = []
+    this.project_list = []
     this.is_remove = false
     this.is_add = false
     this.is_edit = false
-    this.get_customer_list()
-    this.seach_project()
-    this.get_project_list()
+    this.search_project()
+    // this.get_project_list()
 
   }
 
@@ -133,10 +132,8 @@ export class ProjectComponent implements OnInit {
 
   save_project()
   {
-
-
     
-    this.master_data_service.add_project(this.project_list.filter(p => p.is_add == true))
+    this.master_data_service.add_project(this.project_list.filter(p => p.is_add == true)[0])
             .pipe(first())
             .subscribe({
                 next: (response:any) => {
@@ -212,9 +209,9 @@ export class ProjectComponent implements OnInit {
     this.project_reomve_list = []
   }
 
-  seach_project()
+  search_project()
   {
-    this.master_data_service.seach_project(this.customer_selected,this.project_selected)
+    this.master_data_service.search_project(this.customer_selected,this.project_selected)
             .pipe(first())
             .subscribe({
                 next: (response:any) => {
@@ -257,7 +254,7 @@ export class ProjectComponent implements OnInit {
                 next: (response:any) => {
 
                   
-                  if (response.serviceStatus = 'success')
+                  if (response.serviceStatus == 'success')
                   {
 
                     this.reload()

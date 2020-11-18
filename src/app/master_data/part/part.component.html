@@ -281,12 +281,12 @@
                         <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" 
                                 [ngStyle]="(part.package_volume==null||part.package_volume =='') && {'border-color': 'red'}"
-                                [(ngModel)]="part.package_volume" numbersOnly>
+                                [(ngModel)]="part.package_volume" (ngModelChange)="part.package_volume = this.master_data_service.change_number_null(part.package_volume) "  numbersOnly>
                         </div>
                          <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" 
                                 [ngStyle]="(part.package_weight==null||part.package_weight =='') && {'border-color': 'red'}"
-                                [(ngModel)]="part.package_weight" numbersOnly>
+                                [(ngModel)]="part.package_weight" (ngModelChange)="part.package_weight = this.master_data_service.change_number_null(part.package_weight) " numbersOnly>
                         </div>
                         <div class="table-cell" *ngIf="part.is_add||part.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname"  class="form-control" style="width:150px" [(ngModel)]="part.remark">
