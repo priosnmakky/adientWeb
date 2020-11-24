@@ -7,7 +7,7 @@ export class RouteMaster {
 
     route_no: string;
     route_code: string;
-    trip_no: string;
+    route_trip: string;
     supplier_code: string;
     plant_code: string;
     pickup_before: Number;

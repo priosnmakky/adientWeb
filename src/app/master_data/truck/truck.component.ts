@@ -20,7 +20,7 @@ export class TruckComponent implements OnInit {
 
   truck_list : Truck [] = []
 
-  truck_license : string = null
+  truck_license : string = ''
   truck_type : string = null
   truck_province : string = null
   truck_fuel : string = null
@@ -75,13 +75,13 @@ export class TruckComponent implements OnInit {
     this.is_remove = false
     this.package_reomve_list = []
     this.truck_list = []
-    this.seach_truck()
+    this.search_truck()
   }
 
-  seach_truck()
+  search_truck()
   {
-    console.log(this.truck_license+'makky')
-    this.master_data_service.seach_truck(this.truck_license,this.truck_province,this.truck_type,this.truck_fuel)
+
+    this.master_data_service.search_truck(this.truck_license,this.truck_province,this.truck_type,this.truck_fuel)
             .pipe(first())
             .subscribe({
                 next: (response:any) => {
@@ -138,6 +138,7 @@ export class TruckComponent implements OnInit {
                   
           if (response.serviceStatus = 'success')
           {
+            console.log(response.data_list)
             this.province_list = response.data_list.filter((item, i, arr) => arr.findIndex((p) => p.province=== item.province) === i);
           }
           else

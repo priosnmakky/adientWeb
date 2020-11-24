@@ -7,7 +7,7 @@ export class RouteInfo {
     id: number;
     project_code: string;
     route_code : string;
-    trip_no: string;
+    route_trip: string;
     truck_license:Date;
     province:string;
     driver_code:string

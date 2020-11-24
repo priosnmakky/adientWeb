@@ -45,7 +45,7 @@
                     <select name="selectedQuantity" id="aantal" class="form-control" [(ngModel)]="trip_no_selected" 
                         [disabled]="route_code_selected==null||route_code_selected==''">
                         <option [ngValue]="null">Please select</option>
-                        <option *ngFor="let trip of get_related_trip_list(route_code_selected)" [value]="trip.trip_no" >{{trip.trip_no}}</option>
+                        <option *ngFor="let trip of get_related_trip_list(route_code_selected)" [value]="trip.route_trip" >{{trip.route_trip}}</option>
                     </select>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                             {{routeInfo.route_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
-                            {{routeInfo.trip_no}}
+                            {{routeInfo.route_trip}}
                         </div> 
                         <div class="table-cell"  style="vertical-align: middle" *ngIf="!routeInfo.is_add&&!routeInfo.is_edit">
                             {{routeInfo.truck_license}}
@@ -176,18 +176,18 @@
                         </div>
                         <div class="table-cell" *ngIf="routeInfo.is_add" style="vertical-align: middle" >
                             <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 
-                                [ngStyle]="(routeInfo.trip_no==null||routeInfo.trip_no=='') && {'border-color': 'red'}" 
-                                [(ngModel)]="routeInfo.trip_no"
+                                [ngStyle]="(routeInfo.route_trip==null||routeInfo.route_trip=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeInfo.route_trip"
                                 [disabled]="routeInfo.route_code==null||routeInfo.route_code==''">
                                 <option [ngValue]="null">Please select</option>
-                                <option *ngFor="let  trip of get_trip_list_for_adding(routeInfo)" [value]="trip.trip_no" >{{trip.trip_no}}</option>
+                                <option *ngFor="let  trip of get_trip_list_for_adding(routeInfo)" [value]="trip.route_trip" >{{trip.route_trip}}</option>
                             </select>
                         </div>
                         <div class="table-cell"  style="vertical-align: middle" *ngIf="routeInfo.is_edit">
                             {{routeInfo.route_code}}
                         </div>
                         <div class="table-cell"  style="vertical-align: middle" *ngIf="routeInfo.is_edit">
-                            {{routeInfo.trip_no}}
+                            {{routeInfo.route_trip}}
                         </div>
                         <div class="table-cell" *ngIf="routeInfo.is_add||routeInfo.is_edit" style="vertical-align: middle" >
                             <select name="selectedCustomer" id="aantal" class="form-control"  style="width:150px;vertical-align: middle" 

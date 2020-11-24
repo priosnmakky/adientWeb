@@ -96,10 +96,10 @@
                             {{ order.pickup_no }}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
-                           {{ order.supplier_no }}
+                           {{ order.supplier_code }}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
-                           {{ order.plant_no }}
+                           {{ order.plant_code }}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
                            {{ order.order_count }}
@@ -162,8 +162,8 @@
                             </div>
                             <div class="col-sm-4 margin-10"  style="text-align: left" >
                                 <input type="text" id="lname" name="lname" class="form-control " style="width:'100%%';vertical-align"
-                                [ngStyle]="(routeMaster.trip_no==null||routeMaster.trip_no=='') && {'border-color': 'red'}" 
-                                [(ngModel)]="routeMaster.trip_no" >
+                                [ngStyle]="(routeMaster.route_trip==null||routeMaster.route_trip=='') && {'border-color': 'red'}" 
+                                [(ngModel)]="routeMaster.route_trip" >
                             </div>
                             <div class="col-sm-2 margin-10"  style="text-align: left"  >
                                 <h4>Supplier Code:</h4>

@@ -87,7 +87,7 @@ export class GeneratePUSComponent implements OnInit {
     this.routeMaster = new RouteMaster
     this.routeMaster.route_no = ''
     this.routeMaster.route_code = ''
-    this.routeMaster.trip_no = '';
+    this.routeMaster.route_trip = '';
     this.routeMaster.supplier_code = '';
     this.routeMaster.plant_code = '';
     this.routeMaster.pickup_before = null;
@@ -111,7 +111,7 @@ export class GeneratePUSComponent implements OnInit {
     this.routeMaster = new RouteMaster
     this.routeMaster.route_no = ''
     this.routeMaster.route_code = ''
-    this.routeMaster.trip_no = '';
+    this.routeMaster.route_trip = '';
     this.routeMaster.supplier_code = '';
     this.routeMaster.plant_code = '';
     this.routeMaster.pickup_before = null;

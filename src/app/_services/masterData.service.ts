@@ -384,9 +384,9 @@ export class MasterDataService {
 
     }
 
-    seach_truck(truck_license:string,truck_province:string,truck_type:string,truck_fuel:string) {
+    search_truck(truck_license:string,truck_province:string,truck_type:string,truck_fuel:string) {
   
-        return this.http.post(`${environment.apiUrl}/api/master/seach_truck`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_truck`,
         { 
             truck_licese: truck_license,
             truck_province:truck_province,
@@ -420,10 +420,10 @@ export class MasterDataService {
         }));;
     }
 
-    seach_driver(driver_code:string,driver_name:string) {
+    search_driver(driver_code:string,driver_name:string) {
 
         
-        return this.http.post(`${environment.apiUrl}/api/master/seach_driver`,
+        return this.http.post(`${environment.apiUrl}/api/master/search_driver`,
         { 
             driver_code: driver_code,
             driver_name:driver_name,

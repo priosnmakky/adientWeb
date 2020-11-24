@@ -140,6 +140,7 @@ export class RouteInfoComponent implements OnInit {
           if (response.serviceStatus = 'success')
           {
               this.route_list = response.data_list.filter((item, i, arr) => arr.findIndex((t) => t.route_code=== item.route_code) === i);
+    
               this.trip_list = response.data_list
           }
           else
@@ -213,7 +214,7 @@ export class RouteInfoComponent implements OnInit {
   {
     if(routeInfo.route_code == null ||routeInfo.route_code =="")
     {
-      routeInfo.trip_no  = null
+      routeInfo.route_trip  = null
     }
     return this.trip_list.filter(t => t.route_code ===  routeInfo.route_code);
   }
@@ -297,7 +298,7 @@ export class RouteInfoComponent implements OnInit {
       add_route_obj.project_code = null;
       add_route_obj.route_code = null;
       add_route_obj.route_no = null;
-      add_route_obj.trip_no = null;
+      add_route_obj.route_trip = null;
       add_route_obj.truck_license = null
       add_route_obj.province = null
       add_route_obj.driver_code = null

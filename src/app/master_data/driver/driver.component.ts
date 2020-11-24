@@ -20,8 +20,8 @@ import { environment } from '@environments/environment';
 export class DriverComponent implements OnInit {
 
 
-  driver_code :string=null
-  driver_name :string=null
+  driver_code :string=''
+  driver_name :string=''
 
   driver_list : Driver [] = []
 
@@ -36,8 +36,8 @@ export class DriverComponent implements OnInit {
 
   truck_list : Truck [] = []
 
-  truck_license : string = null
-  truck_type : string = null
+  truck_license : string = ''
+  truck_type : string = ''
 
 
 
@@ -48,8 +48,8 @@ export class DriverComponent implements OnInit {
   package_reomve_list : string [] = []
   truck_reomve_list : string [] = []
 
-  project_selected:string = null
-  supplier_selected:string = null
+  project_selected:string = ''
+  supplier_selected:string = ''
 
   popoverTitle = 'Popover title';
   popoverMessage = 'Popover description';
@@ -84,14 +84,14 @@ export class DriverComponent implements OnInit {
     this.is_remove = false
     this.driver_reomve_list = []
     this.driver_list = []
-    this.seach_driver()
+    this.search_driver()
 
   }
 
-  seach_driver()
+  search_driver()
   {
 
-    this.master_data_service.seach_driver(this.driver_code,this.driver_name)
+    this.master_data_service.search_driver(this.driver_code,this.driver_name)
             .pipe(first())
             .subscribe({
                 next: (response:any) => {

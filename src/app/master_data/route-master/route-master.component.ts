@@ -121,7 +121,7 @@ export class RouteMasterComponent implements OnInit {
                     if(response.serviceStatus == 'success')
                     {
                       this.validation_list = response.validate_error_list
-                      this.validate_warning_list = response.validate_warning_list
+                      // this.validate_warning_list = response.validate_warning_list
                       if(this.validation_list.length == 0 && this.validate_warning_list.length == 0)
                       {
                         this.reload()
@@ -373,7 +373,7 @@ export class RouteMasterComponent implements OnInit {
       var routeMaster = new RouteMaster
       routeMaster.route_no = ''
       routeMaster.route_code = ''
-      routeMaster.trip_no = '';
+      routeMaster.route_trip = '';
       routeMaster.supplier_code = '';
       routeMaster.plant_code = '';
       routeMaster.pickup_before = null;
@@ -428,6 +428,7 @@ export class RouteMasterComponent implements OnInit {
   add_remove_routeMaster(routeMaster:RouteMaster)
   {
     routeMaster.is_remove = true
+    console.log(routeMaster)
     this.routeMaster_reomve_list.push(routeMaster.route_no)
   }
   delete_routeMaster()

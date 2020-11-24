@@ -188,17 +188,17 @@
                         <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
                                 [ngStyle]="(truck.max_speed==null||truck.max_speed=='') && {'border-color': 'red'}"
-                                [(ngModel)]="truck.max_speed" numbersOnly>
+                                [(ngModel)]="truck.max_speed" (ngModelChange)="truck.max_speed = this.master_data_service.change_number_null(truck.max_speed) " numbersOnly>
                         </div>
                         <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
                                 [ngStyle]="(truck.max_volume==null||truck.max_volume=='') && {'border-color': 'red'}"
-                                [(ngModel)]="truck.max_volume" numbersOnly>
+                                [(ngModel)]="truck.max_volume" (ngModelChange)="truck.max_volume = this.master_data_service.change_number_null(truck.max_volume) " numbersOnly>
                         </div>
                         <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" 
                                 [ngStyle]="(truck.max_weight==null||truck.max_weight=='') && {'border-color': 'red'}"
-                                [(ngModel)]="truck.max_weight" numbersOnly>
+                                [(ngModel)]="truck.max_weight" (ngModelChange)="truck.max_weight = this.master_data_service.change_number_null(truck.max_weight) " numbersOnly>
                         </div>
                         <div class="table-cell" *ngIf="truck.is_add||truck.is_edit" style="vertical-align: middle">
                             <input type="text" id="lname" name="lname" class="form-control" style="width:150px;vertical-align: middle" [(ngModel)]="truck.remark" >
