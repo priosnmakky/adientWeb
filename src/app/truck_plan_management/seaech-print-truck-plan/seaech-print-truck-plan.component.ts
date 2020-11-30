@@ -6,7 +6,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AlertService } from '../../_alert';
 import { DatePipe } from '@angular/common';
 import { ConfirmationDialogService } from '../../_helpers/confirmation-dialog/confirmation-dialog.service';
-
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-seaech-print-truck-plan',
@@ -241,8 +241,8 @@ export class SeaechPrintTruckPlanComponent implements OnInit {
           console.log(response)
           if (response.serviceStatus == 'success')
           { 
-
-            window.open('http://127.0.0.1:8080/media/'+ response.pdf_name);
+            
+            window.open(`${environment.apiUrl}/media/`+ response.pdf_name);
 
           }
           else
@@ -296,7 +296,7 @@ export class SeaechPrintTruckPlanComponent implements OnInit {
   }
   downloadCSV(){
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url);
   }
 
 }

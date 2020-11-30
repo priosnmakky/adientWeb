@@ -88,7 +88,7 @@
                             {{ pickup.pickUp_count }}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
-                            {{ pickup.due_date }}
+                            {{ pickup.due_date | date:'dd/MM/yyyy HH:mm:ss'}}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
                             {{ pickup.route_code }}

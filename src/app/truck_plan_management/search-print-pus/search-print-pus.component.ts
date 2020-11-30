@@ -186,7 +186,7 @@ export class SearchPrintPUSComponent implements OnInit {
         });
   }
 
-  deleted_order_in_pickup(order_id)
+  deleted_order_in_pickup(order_no)
   {
     this.confirmationDialogService.
         confirm('Please Confirm Deleted PickUp', 'Are you sure to Delete this item?')
@@ -194,7 +194,7 @@ export class SearchPrintPUSComponent implements OnInit {
           if(confirmed)
           {
             this.truck_plan_management_service.deleted_order_in_pickup(
-              order_id
+              order_no
               )
               .pipe(first())
               .subscribe({
@@ -222,7 +222,7 @@ export class SearchPrintPUSComponent implements OnInit {
    
   }
 
-  add_order_in_pickup(order_id)
+  add_order_in_pickup(order_no)
   {
     this.confirmationDialogService.
         confirm('Please Confirm Added PickUp', 'Are you sure to Add this item?')
@@ -230,7 +230,7 @@ export class SearchPrintPUSComponent implements OnInit {
           if(confirmed)
           {
             this.truck_plan_management_service.add_order_in_pickup(
-              order_id,
+              order_no,
               this.pickup_no_selected
               )
               .pipe(first())
@@ -278,7 +278,7 @@ export class SearchPrintPUSComponent implements OnInit {
           if (response.serviceStatus == 'success')
           { 
 
-            window.open('http://127.0.0.1:8080/media/'+ response.pdf_name);
+            window.open(`${environment.apiUrl}/media/`+ response.pdf_name);
 
           }
           else
@@ -328,7 +328,7 @@ export class SearchPrintPUSComponent implements OnInit {
 
   downloadCSV(){
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url);
   }
 
 }

@@ -151,7 +151,7 @@
                             {{order.part_name}}
                         </div>
                         <div class="table-cell" >
-                            {{order.due_date}}
+                            {{order.due_date | date:'dd/MM/yyyy HH:mm:ss' }}
                         </div>
                         <div class="table-cell" >
                             {{order.order_qty}}

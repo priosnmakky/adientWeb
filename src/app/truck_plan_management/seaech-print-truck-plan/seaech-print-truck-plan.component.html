@@ -135,7 +135,7 @@
                            {{ truckPlan.pickUp_count }}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
-                           {{ truckPlan.due_date }}
+                           {{ truckPlan.due_date | date:'dd/MM/yyyy HH:mm:ss'}}
                         </div>
                         <div class="table-cell" style="vertical-align: middle" >
                            {{ truckPlan.release_time }}
@@ -164,7 +164,7 @@
 
     <div [style.display]="showModal ? 'block' : 'none'" class="modal cdk-overlay-pane center"   id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center;">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div class="modal-header text-center" style="background-color: #668cff;text-align: center;">
                     <h2 class="modal-title w-100">Order Management</h2>
                 </div>
@@ -204,7 +204,7 @@
                                 {{ pickup.plant_code }}
                             </div>
                             <div class="table-cell">
-                                {{ pickup.due_date }}
+                                {{ pickup.due_date  | date:'dd/MM/yyyy HH:mm:ss'}}
                             </div>
                             <div class="table-cell">
                                 {{ pickup.route_code }}

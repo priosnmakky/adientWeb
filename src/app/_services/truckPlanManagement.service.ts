@@ -185,11 +185,11 @@ export class TruckPlanManagementService {
 
     }
 
-    deleted_order_in_pickup(order_id:string ) {
+    deleted_order_in_pickup(order_no:string ) {
 
         return this.http.post(`${environment.apiUrl}/api/truck_plan_management/deleted_order_in_pickup`,
         { 
-            order_id:order_id
+            order_no:order_no
         },
         ).pipe(map(response => {
             
@@ -213,11 +213,11 @@ export class TruckPlanManagementService {
 
     }
 
-    add_order_in_pickup(order_id:string,pickup_no:string) {
+    add_order_in_pickup(order_no:string,pickup_no:string) {
 
         return this.http.post(`${environment.apiUrl}/api/truck_plan_management/add_order_in_pickup`,
         { 
-            order_id:order_id,
+            order_no:order_no,
             pickup_no:pickup_no
         },
         ).pipe(map(response => {
