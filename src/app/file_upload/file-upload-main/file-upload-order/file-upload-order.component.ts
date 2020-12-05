@@ -23,6 +23,7 @@ export class FileUploadOrderComponent implements OnInit {
   username = JSON.parse(localStorage.getItem('user_detail')).username;
   fileList : any[];
   validateErrorList : any[];
+  csv_name_str :string
 
   options = {
     autoClose: true,
@@ -157,6 +158,8 @@ export class FileUploadOrderComponent implements OnInit {
                 next: (response:any) => {
 
                   this.fileList = response.data_list;
+                  this.csv_name_str = response.csv_name
+
                 },
                 error: error => {
                 }
@@ -166,7 +169,7 @@ export class FileUploadOrderComponent implements OnInit {
   downloadCSV(file_no)
   {
 
-    window.open('http://127.0.0.1:8080/media/'+ file_no +'.csv');
+    window.open('http://127.0.0.1:8080/media/' + this.csv_name_str);
   }
 
   confirm()

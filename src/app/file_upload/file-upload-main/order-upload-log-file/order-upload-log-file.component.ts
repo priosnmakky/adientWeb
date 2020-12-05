@@ -190,7 +190,7 @@ export class OrderUploadLogFileComponent implements OnInit {
 
   downloadCSVFile(file_no)
   {
-    window.open('http://127.0.0.1:8080/media/'+ file_no  +'.csv');
+    window.open('http://127.0.0.1:8080/media/'+ file_no);
 
   }
 }

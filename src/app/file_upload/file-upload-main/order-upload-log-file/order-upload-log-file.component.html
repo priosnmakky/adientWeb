@@ -99,7 +99,7 @@
                     
                      <div class="table-row" *ngFor="let file of file_list"  >
                         <div class="table-cell"  >
-                           <td (click)="downloadCSVFile(file.file_no)" ><img src="/assets/img/csv-icon.png" alt="image" class="csv-icon"></td>
+                           <td (click)="downloadCSVFile(file.csv_url)" ><img src="/assets/img/csv-icon.png" alt="image" class="csv-icon"></td>
                         </div>
                         <div class="table-cell"  style="vertical-align: middle">
                             {{file.customer_code}}
