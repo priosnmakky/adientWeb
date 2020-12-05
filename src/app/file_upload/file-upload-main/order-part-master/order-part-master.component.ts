@@ -3,6 +3,7 @@ import { UploadFilesService,CustomerService, ProjectService,MasterDataService } 
 import { first } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
+import { environment } from '@environments/environment';
 
 
 @Component({
@@ -195,7 +196,7 @@ export class OrderPartMasterComponent implements OnInit {
   downloadCSV()
   {
 
-    window.open('http://127.0.0.1:8080/media/'+ this.csv_url_str);
+    window.open(`${environment.apiUrl}/media/`+ this.csv_url_str);
   }
 
 

@@ -4,6 +4,7 @@ import { UploadFilesService,CustomerService, ProjectService,MasterDataService } 
 import { first } from 'rxjs/operators';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AlertService } from '../../../_alert';
+import { environment } from '@environments/environment';
 
 
 
@@ -169,7 +170,7 @@ export class FileUploadOrderComponent implements OnInit {
   downloadCSV(file_no)
   {
 
-    window.open('http://127.0.0.1:8080/media/' + this.csv_name_str);
+    window.open(`${environment.apiUrl}/media/` + this.csv_name_str);
   }
 
   confirm()
