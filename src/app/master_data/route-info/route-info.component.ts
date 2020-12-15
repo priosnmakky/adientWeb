@@ -456,20 +456,6 @@ export class RouteInfoComponent implements OnInit {
         )
 
       }
-      // if(this.is_remove)
-      // {
-      //   this.delete_routeMaster()
-      // }
-      // if(this.is_edit)
-      // {
-      //   this.edited_project()
-
-      // }
-      // if(this.is_remove)
-      // {
-      //   this.delete_project()
-
-      // }
 
     }
     

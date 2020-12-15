@@ -411,9 +411,6 @@ export class RouteMasterComponent implements OnInit {
                   {
                     this.alertService.error(response.massage, this.options)
                   }
-                  // this.alertService.success(response.massage, this.options)
-                  // console.log(response)
-                  // this.ngOnInit()
                 },
                 error: error => {
                 }
@@ -491,7 +488,7 @@ export class RouteMasterComponent implements OnInit {
     this.is_show_modal = true;
   
   }
-  //Bootstrap Modal Close event
+  
   hide_warning_modal()
   {
     this.is_show_modal = false;

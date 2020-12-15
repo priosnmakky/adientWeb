@@ -228,7 +228,7 @@ export class PartComponent implements OnInit {
 
   add_comfire_part(part:Part)
   {
-    // part.status = 2
+
     this.part_confirm_list.push(part)
 
   }
@@ -237,7 +237,6 @@ export class PartComponent implements OnInit {
   {
     this.is_confirm = false;
     this.ngOnInit()
-
 
   }
 
@@ -450,14 +449,7 @@ export class PartComponent implements OnInit {
       {
         this.update_comfirm_part()
       }
-      // if(this.is_edit)
-      // {
-      //    this.edited_package()
-      //  }
-      // if(this.is_remove)
-      // {
-      //    this.deleted_package()
-      //  }
+   
     }
     
   }

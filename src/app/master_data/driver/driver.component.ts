@@ -32,7 +32,6 @@ export class DriverComponent implements OnInit {
   is_add:boolean = false
   is_edit:boolean = false
   is_remove:boolean = false
-  ////////////////////////////////
 
   truck_list : Truck [] = []
 

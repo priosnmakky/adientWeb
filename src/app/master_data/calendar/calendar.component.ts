@@ -73,10 +73,6 @@ export class CalendarComponent implements OnInit {
   {
 
     this.calendarMaster_lsit = []
-    // this.customer_code_selected = null
-    // this.project_code_selected = null
-    // this.plant_code_selected = null
-    // this.working_day_selected = null
     this.is_edit = false
     this.is_remove = false
     this.calendarMaster_reomve_list = []

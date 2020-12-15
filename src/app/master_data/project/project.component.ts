@@ -146,9 +146,7 @@ export class ProjectComponent implements OnInit {
                   {
                     this.alertService.error(response.massage, this.options)
                   }
-                  // this.alertService.success(response.massage, this.options)
-                  // console.log(response)
-                  // this.ngOnInit()
+            
                 },
                 error: error => {
                 }
@@ -281,7 +279,6 @@ export class ProjectComponent implements OnInit {
 
   search(event)
   {
-    console.log('search project')
 
   }
   handleKeyboardEvent(event: KeyboardEvent) {

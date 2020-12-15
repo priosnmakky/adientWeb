@@ -697,15 +697,7 @@ export class MasterDataService {
         const formData = new FormData();
         formData.append('file', image_file);
         formData.append('packages',JSON.stringify(packages));
-        // formData.append('package_no',packages.package_no);
-        // formData.append('snp',packages.snp +"");
-        // formData.append('width',packages.width +"");
-        // formData.append('length',packages.length +"");
-        // formData.append('height',packages.height +"");
-        // formData.append('weight',packages.weight +"");
-        // formData.append('station_code',packages.station_code +"");
-
-
+    
         return this.http.post(`${environment.apiUrl}/api/master/package`, 
         formData
             ,

@@ -399,7 +399,6 @@ export class PackageComponent implements OnInit {
   handleKeyboardEvent(event: KeyboardEvent) {
     if(event.key == 'Enter')
     {
-      console.log('sadasdasd')
       
       if(this.is_add)
       {

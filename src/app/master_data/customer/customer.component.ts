@@ -57,8 +57,7 @@ export class CustomerComponent implements OnInit {
 
   reload()
   {
-    // this.customer_selected = null
-    // this.project_selected = null
+
     this.customer_list = []
     this.customer_reomve_list = []
     this.csv_url = null

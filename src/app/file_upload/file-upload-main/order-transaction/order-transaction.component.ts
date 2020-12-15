@@ -253,10 +253,6 @@ export class OrderTransactionComponent implements OnInit {
   
   }
  
-  // match_order()
-  // {
-  //   this.status = 2;
-  // }
   downloadCSV()
   {
 
